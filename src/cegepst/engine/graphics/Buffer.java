@@ -1,6 +1,7 @@
 package cegepst.engine.graphics;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Buffer {
 
@@ -27,5 +28,14 @@ public class Buffer {
 
     public void drawImage(Image image, int x, int y) {
         graphics.drawImage(image, x, y, null);
+    }
+
+    public BufferedImage rotateImage(BufferedImage image, double angle) {
+        BufferedImage rotated = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
+        Graphics2D graphic = rotated.createGraphics();
+        graphic.rotate(angle, image.getWidth() / 2, image.getHeight() / 2);
+        graphic.drawImage(image, null, 0, 0);
+        graphic.dispose();
+        return rotated;
     }
 }

@@ -1,8 +1,10 @@
 package cegepst.engine.graphics;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
 public class RenderingEngine {
@@ -48,6 +50,14 @@ public class RenderingEngine {
 
     public void addKeyListener(KeyListener listener) {
         panel.addKeyListener(listener);
+    }
+
+    public void addMouseMovementListener(MouseMotionListener listener) {
+        panel.addMouseMotionListener(listener);
+    }
+
+    public void addMouseClickListener(MouseInputListener listener) {
+        panel.addMouseListener(listener);
     }
 
     private RenderingEngine() {
