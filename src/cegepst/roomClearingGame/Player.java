@@ -13,12 +13,14 @@ public class Player extends ControllableEntity {
 
     private BufferedImage spriteSheet;
     private Mouse mouse;
+    private int xDelta;
+    private int yDelta;
 
-    public Player(MovementController controller, Mouse mouse) {
+    public Player(MovementController controller, Mouse mouse, World world) {
         super(controller);
         this.mouse = mouse;
         setDimension(128, 128);
-        setSpeed(5);
+        setSpeed(3);
     }
 
     public void load() {
@@ -27,13 +29,25 @@ public class Player extends ControllableEntity {
 
     @Override
     public void draw(Buffer buffer) {
-        buffer.drawImage(buffer.rotateImage(spriteSheet, findSpriteRotationAngle()), x - 52, y - 69);
+        buffer.drawImage(buffer.rotateImage(spriteSheet, findSpriteRotationAngle()), (800 / 2) - 52, (600 / 2) - 69);
     }
 
     @Override
     public void update() {
+        xDelta = getX();
+        yDelta = getY();
         super.update();
         moveWithController();
+        xDelta -= getX();
+        yDelta -= getY();
+    }
+
+    public int getXDelta() {
+        return xDelta;
+    }
+
+    public int getYDelta() {
+        return yDelta;
     }
 
     private void loadSpriteSheet() {
@@ -45,8 +59,8 @@ public class Player extends ControllableEntity {
     }
 
     private double findSpriteRotationAngle() {
-        int deltaX = (x) - mouse.getX();
-        int deltaY = (y) - mouse.getY();
+        int deltaX = (800 / 2) - mouse.getX();
+        int deltaY = (600 / 2) - mouse.getY();
         return -Math.atan2(deltaX, deltaY);
     }
 }

@@ -15,13 +15,13 @@ public class RoomClearingGame extends Game {
     protected void initialize() {
         gamePad = new GamePad();
         mouse = new Mouse();
-        player = new Player(gamePad, mouse);
         world = new World();
+        player = new Player(gamePad, mouse, world);
         world.load();
         player.load();
         mouse.load();
-        camera = new Camera(world.getWidth(), world.getHeight(), 800, 600, 800 / 2, 600 / 2, 5);
-        player.teleport(200, 300);
+        camera = new Camera(world.getWidth(), world.getHeight(), 800, 600, 200, 300);
+        player.teleport(camera.getCameraX(), camera.getCameraY());
     }
 
     @Override
@@ -34,9 +34,9 @@ public class RoomClearingGame extends Game {
 
     @Override
     protected void drawOnBuffer(Buffer buffer) {
-        camera.updateCameraPosition(player.getX(), player.getY());
         world.draw(buffer, -camera.getCameraX(), -camera.getCameraY());
         player.draw(buffer);
         mouse.drawCursor(buffer);
+        camera.updateCameraPosition(player.getX(), player.getY());
     }
 }

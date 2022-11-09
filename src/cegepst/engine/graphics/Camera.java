@@ -6,26 +6,29 @@ public class Camera {
     int viewportSizeX = 0;
     int viewportSizeY = 0;
     int offsetMaxX;
+    int offsetX;
     int offsetMaxY;
+    int offsetY;
     int cameraX;
     int cameraY;
-    int speed;
 
-    public Camera(int worldSizeX, int worldSizeY, int viewportSizeX, int viewportSizeY, int cameraX, int cameraY, int speed) {
+    public Camera(int worldSizeX, int worldSizeY, int viewportSizeX, int viewportSizeY, int cameraX, int cameraY) {
         this.worldSizeX = worldSizeX;
         this.worldSizeY = worldSizeY;
         this.viewportSizeX = viewportSizeX;
         this.viewportSizeY = viewportSizeY;
         this.cameraX = cameraX;
         this.cameraY = cameraY;
-        this.speed = speed;
+        offsetX = this.cameraX;
+        offsetY = this.cameraY;
         offsetMaxX = worldSizeX - viewportSizeY;
         offsetMaxY = worldSizeY - viewportSizeY;
     }
 
     public void updateCameraPosition(int playerX, int playerY) {
-        cameraX = ((playerX - 52) - viewportSizeX / 2) * speed;
-        cameraY = ((playerY - 69) - viewportSizeY / 2) * speed;
+        cameraX = playerX - ((viewportSizeX - worldSizeX) / 2);
+        cameraY = playerY - ((viewportSizeY - worldSizeY) / 2);
+
         if (cameraX > offsetMaxX) {
             cameraX = offsetMaxX;
         } else if (cameraX < 0) {

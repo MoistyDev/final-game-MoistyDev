@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class World {
-    private final String MAP_PATH = "images/world.png";
+    private final String MAP_PATH = "images/Gas Station.png";
     private BufferedImage background;
 
     public void load() {

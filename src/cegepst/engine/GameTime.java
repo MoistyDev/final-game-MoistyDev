@@ -23,6 +23,10 @@ public class GameTime {
         return System.currentTimeMillis() - gameStartTime;
     }
 
+    public static long getFpsTimeDelta() {
+        return fpsTimeDelta;
+    }
+
     public static String getElapsedFormattedTime() {
         long time = System.currentTimeMillis() - gameStartTime;
         long hours = TimeUnit.MILLISECONDS.toHours(time);
@@ -58,6 +62,7 @@ public class GameTime {
             fpsCount = 0;
         }
         fpsTimeDelta = currentSecond;
+        System.out.println(currentFps);
     }
 
     private long getSleepTime() {
