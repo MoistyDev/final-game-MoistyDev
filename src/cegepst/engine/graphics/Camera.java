@@ -1,16 +1,12 @@
 package cegepst.engine.graphics;
 
 public class Camera {
-    int worldSizeX = 0;
-    int worldSizeY = 0;
-    int viewportSizeX = 0;
-    int viewportSizeY = 0;
-    int offsetMaxX;
-    int offsetX;
-    int offsetMaxY;
-    int offsetY;
-    int cameraX;
-    int cameraY;
+    private int worldSizeX = 0;
+    private int worldSizeY = 0;
+    private int viewportSizeX = 0;
+    private int viewportSizeY = 0;
+    private int cameraX;
+    private int cameraY;
 
     public Camera(int worldSizeX, int worldSizeY, int viewportSizeX, int viewportSizeY, int cameraX, int cameraY) {
         this.worldSizeX = worldSizeX;
@@ -19,17 +15,17 @@ public class Camera {
         this.viewportSizeY = viewportSizeY;
         this.cameraX = cameraX;
         this.cameraY = cameraY;
-        offsetX = this.cameraX;
-        offsetY = this.cameraY;
-        offsetMaxX = worldSizeX - viewportSizeY;
-        offsetMaxY = worldSizeY - viewportSizeY;
+        //offsetX = this.cameraX;
+        //offsetY = this.cameraY;
+        //offsetMaxX = worldSizeX - viewportSizeY;
+        //offsetMaxY = worldSizeY - viewportSizeY;
     }
 
     public void updateCameraPosition(int playerX, int playerY) {
         cameraX = playerX - ((viewportSizeX - worldSizeX) / 2);
         cameraY = playerY - ((viewportSizeY - worldSizeY) / 2);
 
-        if (cameraX > offsetMaxX) {
+        /*if (cameraX > offsetMaxX) {
             cameraX = offsetMaxX;
         } else if (cameraX < 0) {
             cameraX = 0;
@@ -39,7 +35,23 @@ public class Camera {
 
         } else if (cameraY < 0) {
             cameraY = 0;
-        }
+        }*/
+    }
+
+    public int getViewportSizeX() {
+        return viewportSizeX;
+    }
+
+    public int getViewportSizeY() {
+        return viewportSizeY;
+    }
+
+    public int getWorldSizeX() {
+        return worldSizeX;
+    }
+
+    public int getWorldSizeY() {
+        return worldSizeY;
     }
 
     public int getCameraX() {

@@ -69,7 +69,6 @@ public class RenderingEngine {
         panel = new JPanel();
         panel.setBackground(Color.blue);
         panel.setFocusable(true);
-        panel.setDoubleBuffered(true);
         screen.setPanel(panel);
     }
 
@@ -84,6 +83,7 @@ public class RenderingEngine {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         hints.put(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
+        hints.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         return hints;
     }
 }

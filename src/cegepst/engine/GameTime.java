@@ -1,5 +1,6 @@
 package cegepst.engine;
 
+import javax.swing.Timer;
 import java.util.concurrent.TimeUnit;
 
 public class GameTime {
@@ -62,7 +63,6 @@ public class GameTime {
             fpsCount = 0;
         }
         fpsTimeDelta = currentSecond;
-        System.out.println(currentFps);
     }
 
     private long getSleepTime() {

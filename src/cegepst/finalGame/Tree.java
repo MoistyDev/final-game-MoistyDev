@@ -24,7 +24,7 @@ public class Tree extends StaticEntity {
     @Override
     public void draw(Buffer buffer) {
         buffer.drawImage(image, x, y);
-        //blockade.draw(buffer);
+        blockade.draw(buffer);
     }
 
     public void blockadeFromTop() {

@@ -38,7 +38,7 @@ public class World {
     }
 
     public void draw(Buffer buffer) {
-        buffer.drawImage(background, 0, -64);
+        buffer.drawImage(background, 0, 0);
         //for (Blockade blockade : blockades) {
         //    blockade.draw(buffer);
         //}

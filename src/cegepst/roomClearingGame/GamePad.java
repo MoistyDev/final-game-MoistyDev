@@ -13,4 +13,5 @@ public class GamePad extends MovementController {
     public boolean isQuitPressed() {
         return isKeyPressed(KeyEvent.VK_ESCAPE);
     }
+
 }
