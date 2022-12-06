@@ -16,12 +16,22 @@ public class Player extends ControllableEntity {
     private Mouse mouse;
     private int viewportX = 800 / 2;
     private int viewportY = 600 / 2;
+    private int cooldown = 0;
 
     public Player(MovementController controller, Mouse mouse) {
         super(controller);
         this.mouse = mouse;
         setDimension(128, 128);
         setSpeed(10);
+    }
+
+    public Bullet fire() {
+        cooldown = 50;
+        return new Bullet(this);
+    }
+
+    public boolean canFire() {
+        return cooldown == 0;
     }
 
     public void load() {
@@ -38,6 +48,14 @@ public class Player extends ControllableEntity {
     public void update() {
         super.update();
         moveWithController();
+        cycleCooldown();
+    }
+
+    private void cycleCooldown() {
+        cooldown--;
+        if (cooldown < 0) {
+            cooldown = 0;
+        }
     }
 
     private void loadSpriteSheet() {

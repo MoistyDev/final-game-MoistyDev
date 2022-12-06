@@ -5,6 +5,7 @@ import cegepst.engine.graphics.RenderingEngine;
 
 import javax.imageio.ImageIO;
 import javax.swing.event.MouseInputListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
@@ -13,7 +14,7 @@ import java.util.HashMap;
 
 public class Mouse implements MouseMotionListener, MouseInputListener {
 
-    private HashMap<MouseEvent, Boolean> clickedInputs;
+    private HashMap<Integer, Boolean> clickedInputs;
     private static final String SPRITE_PATH = "images/Crosshair.png";
     private BufferedImage spriteSheet;
     private int x;
@@ -24,7 +25,9 @@ public class Mouse implements MouseMotionListener, MouseInputListener {
         clickedInputs = new HashMap<>();
         RenderingEngine.getInstance().addMouseMovementListener(this);
         RenderingEngine.getInstance().addMouseClickListener(this);
+        bindClick(MouseEvent.MOUSE_CLICKED);
     }
+
 
     public void load() {
         loadSpriteSheet();
@@ -38,9 +41,16 @@ public class Mouse implements MouseMotionListener, MouseInputListener {
         return y;
     }
 
+    public boolean isFireClicked() {
+        return clickedInputs.containsKey(MouseEvent.MOUSE_CLICKED) && clickedInputs.get(MouseEvent.MOUSE_CLICKED);
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        int inputCode = e.getButton();
+        if (clickedInputs.containsKey(inputCode)) {
+            clickedInputs.put(inputCode, true);
+        }
     }
 
     @Override
@@ -50,7 +60,10 @@ public class Mouse implements MouseMotionListener, MouseInputListener {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        int inputCode = e.getButton();
+        if (clickedInputs.containsKey(inputCode)) {
+            clickedInputs.put(inputCode, false);
+        }
     }
 
     @Override
@@ -77,6 +90,10 @@ public class Mouse implements MouseMotionListener, MouseInputListener {
 
     public void drawCursor(Buffer buffer) {
         buffer.drawImage(spriteSheet, x - 16, y - 16);
+    }
+
+    private void bindClick(int inputCode) {
+        clickedInputs.put(inputCode, false);
     }
 
     private void loadSpriteSheet() {
