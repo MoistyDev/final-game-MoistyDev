@@ -10,51 +10,124 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Player extends ControllableEntity {
-    private static final String SPRITE_PATH = "images/Officer128.png";
+    private static final int MOVING_ANIMATION_SPEED = 3;
+    private static final int IDLE_ANIMATION_SPEED = 7;
 
-    private BufferedImage spriteSheet;
     private Mouse mouse;
     private int viewportX = 800 / 2;
     private int viewportY = 600 / 2;
+    private int offsetX = width / 2;
+    private int offsetY = height / 2;
+    private BufferedImage[] idleFrames;
+    private BufferedImage[] shootingFrames;
+    private BufferedImage[] movingFrames;
+    private int currentIdleFrame = 0;
+    private int nextIdleFrame = IDLE_ANIMATION_SPEED;
+    private int currentMovingFrame = 0;
+    private int nextMovingFrame = MOVING_ANIMATION_SPEED;
 
     public Player(MovementController controller, Mouse mouse) {
         super(controller);
         this.mouse = mouse;
-        setDimension(128, 128);
-        setSpeed(10);
+        setDimension(64, 64);
+        setSpeed(4);
     }
 
     public void load() {
-        loadSpriteSheet();
+        loadAnimationFrames();
     }
 
     @Override
     public void draw(Buffer buffer) {
-        buffer.drawImage(buffer.rotateImage(spriteSheet, findSpriteRotationAngle()), viewportX - 52, viewportY - 69);
-        buffer.drawRectangle((800 / 2), (600 / 2), 16, 16, new Color(255, 0, 0, 100));
+       if (!hasMoved()) {
+               buffer.drawImage(buffer.rotateImage(idleFrames[currentIdleFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+       } else if (hasMoved()) {
+               buffer.drawImage(buffer.rotateImage(movingFrames[currentMovingFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+       }
     }
 
     @Override
     public void update() {
         super.update();
         moveWithController();
-        cycleCooldown();
-    }
-
-    private void cycleCooldown() {
-        cooldown--;
-        if (cooldown < 0) {
-            cooldown = 0;
+        if (hasMoved()) {
+            --nextMovingFrame;
+            if (nextMovingFrame == 0) {
+                ++currentMovingFrame;
+                if (currentMovingFrame >= movingFrames.length) {
+                    currentMovingFrame = 0;
+                }
+                nextMovingFrame = MOVING_ANIMATION_SPEED;
+            }
+        } else {
+            --nextIdleFrame;
+            if (nextIdleFrame == 0) {
+                ++currentIdleFrame;
+                if (currentIdleFrame >= idleFrames.length) {
+                    currentIdleFrame = 0;
+                }
+                nextIdleFrame = IDLE_ANIMATION_SPEED;
+            }
         }
     }
 
-    private void loadSpriteSheet() {
+    private void loadAnimationFrames() {
+        loadIdleFrames();
+        loadShootingFrames();
+        loadMovingFrames();
+    }
+
+    private void loadMovingFrames() {
+        movingFrames = new BufferedImage[19];
+        for (int i = 0; i < movingFrames.length; i++) {
+            try {
+                movingFrames[i] = scaleBufferedImage(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/PMC/handgun/move/survivor-move_handgun_" + i + ".png")), 80, 128, 128);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void loadShootingFrames() {
+        shootingFrames = new BufferedImage[3];
         try {
-            spriteSheet = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(SPRITE_PATH));
+            for (int i = 0; i < shootingFrames.length; i++) {
+                shootingFrames[i] = scaleBufferedImage(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/PMC/handgun/shoot/survivor-shoot_handgun_" + i + ".png")), 80, 128, 128);
+            }
         } catch (IOException e) {
-            System.out.println("Sprite sheet couldn't load");
+            throw new RuntimeException(e);
         }
     }
+
+    private void loadIdleFrames() {
+        idleFrames = new BufferedImage[19];
+        try {
+            for (int i = 0; i < idleFrames.length; i++) {
+                idleFrames[i] = scaleBufferedImage(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/PMC/handgun/idle/survivor-idle_handgun_" + i + ".png")), 80, 128, 128);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private BufferedImage scaleBufferedImage(BufferedImage originalImage, int width, int height) {
+        Image image = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = scaledImage.createGraphics();
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+        return scaledImage;
+    }
+    private BufferedImage scaleBufferedImage(BufferedImage originalImage, int rotation, int width, int height) {
+        Image image = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = scaledImage.createGraphics();
+        g.rotate(rotation, scaledImage.getWidth() / 2, scaledImage.getHeight() / 2);
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+        return scaledImage;
+    }
+
 
     private double findSpriteRotationAngle() {
         int deltaX = (viewportX) - mouse.getX();

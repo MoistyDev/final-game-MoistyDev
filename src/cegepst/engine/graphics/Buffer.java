@@ -1,6 +1,7 @@
 package cegepst.engine.graphics;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Buffer {
@@ -24,6 +25,15 @@ public class Buffer {
     public void drawString(String text, int x, int y, Paint paint) {
         graphics.setPaint(paint);
         graphics.drawString(text, x, y);
+    }
+
+    public BufferedImage scaleBufferedImage(BufferedImage originalImage, int width, int height) {
+        Image image = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = scaledImage.createGraphics();
+        g.drawImage(image, 0, 0, null);
+        g.dispose();
+        return scaledImage;
     }
 
     public void drawImage(Image image, int x, int y) {

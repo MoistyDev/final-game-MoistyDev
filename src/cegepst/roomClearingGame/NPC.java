@@ -6,7 +6,13 @@ import cegepst.engine.graphics.Buffer;
 public class NPC extends MovableEntity {
 
     public NPC() {
-        set
+        setDimension(128, 128);
+        setSpeed(5);
+    }
+
+    @Override
+    public void update() {
+
     }
 
     @Override

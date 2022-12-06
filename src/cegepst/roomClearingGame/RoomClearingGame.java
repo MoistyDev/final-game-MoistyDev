@@ -5,6 +5,7 @@ import cegepst.engine.graphics.Camera;
 import cegepst.engine.Game;
 import cegepst.engine.graphics.RenderingEngine;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class RoomClearingGame extends Game {
@@ -13,7 +14,6 @@ public class RoomClearingGame extends Game {
     private Player player;
     private World world;
     private Camera camera;
-    private ArrayList<Bullet> bullets;
 
     @Override
     protected void initialize() {
@@ -21,7 +21,6 @@ public class RoomClearingGame extends Game {
         mouse = new Mouse();
         world = new World();
         player = new Player(gamePad, mouse);
-        bullets = new ArrayList<>();
         player.load();
         mouse.load();
         camera = new Camera(world.getWidth(), world.getHeight(), 800, 600, 200, 300);
@@ -43,7 +42,6 @@ public class RoomClearingGame extends Game {
         System.out.println("x : " + player.getX() + " y : " + player.getY());
         mouse.drawCursor(buffer);
         camera.updateCameraPosition(player.getX(), player.getY());
-        world.drawBounds(buffer);
     }
 
     private void updateInputs() {
@@ -53,7 +51,6 @@ public class RoomClearingGame extends Game {
         if (gamePad.isFirePressed()) {
             Sound.FIRE.play();
             System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEeee");
-            bullets.add(player.fire());
         }
     }
 }
