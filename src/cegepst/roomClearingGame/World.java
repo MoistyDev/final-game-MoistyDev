@@ -30,12 +30,6 @@ public class World {
         buffer.drawImage(background, cameraX, cameraY);
     }
 
-    public void drawBounds(Buffer buffer) {
-        for (Boundary boundary : boundaries) {
-            boundary.draw(buffer);
-        }
-    }
-
     public int getWidth() {
         return background.getWidth();
     }

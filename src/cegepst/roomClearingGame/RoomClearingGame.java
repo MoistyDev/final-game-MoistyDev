@@ -51,6 +51,7 @@ public class RoomClearingGame extends Game {
         if (gamePad.isFirePressed()) {
             Sound.FIRE.play();
             System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEeee");
+            player.setIsShooting(true);
         }
     }
 }

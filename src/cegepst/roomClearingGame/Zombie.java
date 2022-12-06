@@ -3,9 +3,9 @@ package cegepst.roomClearingGame;
 import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.graphics.Buffer;
 
-public class NPC extends MovableEntity {
+public class Zombie extends MovableEntity {
 
-    public NPC() {
+    public Zombie() {
         setDimension(128, 128);
         setSpeed(5);
     }

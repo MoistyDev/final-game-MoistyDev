@@ -12,12 +12,13 @@ import java.io.IOException;
 public class Player extends ControllableEntity {
     private static final int MOVING_ANIMATION_SPEED = 3;
     private static final int IDLE_ANIMATION_SPEED = 7;
+    private static final int SHOOTING_ANIMATION_SPEED = 3;
 
     private Mouse mouse;
+    private MovementController controller;
     private int viewportX = 800 / 2;
     private int viewportY = 600 / 2;
-    private int offsetX = width / 2;
-    private int offsetY = height / 2;
+    private boolean isShooting = false;
     private BufferedImage[] idleFrames;
     private BufferedImage[] shootingFrames;
     private BufferedImage[] movingFrames;
@@ -25,9 +26,12 @@ public class Player extends ControllableEntity {
     private int nextIdleFrame = IDLE_ANIMATION_SPEED;
     private int currentMovingFrame = 0;
     private int nextMovingFrame = MOVING_ANIMATION_SPEED;
+    private int currentShootingFrame = 0;
+    private int nextShootingFrame = SHOOTING_ANIMATION_SPEED;
 
     public Player(MovementController controller, Mouse mouse) {
         super(controller);
+        this.controller = controller;
         this.mouse = mouse;
         setDimension(64, 64);
         setSpeed(4);
@@ -40,9 +44,17 @@ public class Player extends ControllableEntity {
     @Override
     public void draw(Buffer buffer) {
        if (!hasMoved()) {
+           if (isShooting) {
+               buffer.drawImage(buffer.rotateImage(shootingFrames[currentShootingFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+           } else if (!isShooting) {
                buffer.drawImage(buffer.rotateImage(idleFrames[currentIdleFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+           }
        } else if (hasMoved()) {
+           if (isShooting) {
+               buffer.drawImage(buffer.rotateImage(shootingFrames[currentShootingFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+           } else if (!isShooting) {
                buffer.drawImage(buffer.rotateImage(movingFrames[currentMovingFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+           }
        }
     }
 
@@ -51,23 +63,55 @@ public class Player extends ControllableEntity {
         super.update();
         moveWithController();
         if (hasMoved()) {
-            --nextMovingFrame;
-            if (nextMovingFrame == 0) {
-                ++currentMovingFrame;
-                if (currentMovingFrame >= movingFrames.length) {
-                    currentMovingFrame = 0;
-                }
-                nextMovingFrame = MOVING_ANIMATION_SPEED;
+            cycleMovingFrames();
+            if (isShooting) {
+                cycleShootingFrames();
             }
         } else {
-            --nextIdleFrame;
-            if (nextIdleFrame == 0) {
-                ++currentIdleFrame;
-                if (currentIdleFrame >= idleFrames.length) {
-                    currentIdleFrame = 0;
-                }
-                nextIdleFrame = IDLE_ANIMATION_SPEED;
+            cycleIdleFrames();
+            if (isShooting) {
+                cycleShootingFrames();
             }
+        }
+    }
+
+    public void setIsShooting(boolean value) {
+        isShooting = value;
+    }
+
+
+
+    private void cycleShootingFrames() {
+        --nextShootingFrame;
+        if (nextShootingFrame == 0) {
+            ++currentShootingFrame;
+            if (currentShootingFrame >= shootingFrames.length) {
+                currentShootingFrame = 0;
+                isShooting = false;
+            }
+            nextShootingFrame = SHOOTING_ANIMATION_SPEED;
+        }
+    }
+
+    private void cycleMovingFrames() {
+        --nextMovingFrame;
+        if (nextMovingFrame == 0) {
+            ++currentMovingFrame;
+            if (currentMovingFrame >= movingFrames.length) {
+                currentMovingFrame = 0;
+            }
+            nextMovingFrame = MOVING_ANIMATION_SPEED;
+        }
+    }
+
+    private void cycleIdleFrames() {
+        --nextIdleFrame;
+        if (nextIdleFrame == 0) {
+            ++currentIdleFrame;
+            if (currentIdleFrame >= idleFrames.length) {
+                currentIdleFrame = 0;
+            }
+            nextIdleFrame = IDLE_ANIMATION_SPEED;
         }
     }
 
