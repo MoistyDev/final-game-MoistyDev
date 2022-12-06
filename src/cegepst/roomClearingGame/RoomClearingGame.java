@@ -12,6 +12,7 @@ public class RoomClearingGame extends Game {
     private GamePad gamePad;
     private Mouse mouse;
     private Player player;
+    private Zombie zombie;
     private World world;
     private Camera camera;
 
@@ -21,6 +22,7 @@ public class RoomClearingGame extends Game {
         mouse = new Mouse();
         world = new World();
         player = new Player(gamePad, mouse);
+        zombie = new Zombie();
         player.load();
         mouse.load();
         camera = new Camera(world.getWidth(), world.getHeight(), 800, 600, 200, 300);
@@ -33,13 +35,15 @@ public class RoomClearingGame extends Game {
     protected void update() {
         updateInputs();
         player.update();
+        zombie.update();
     }
 
     @Override
     protected void drawOnBuffer(Buffer buffer) {
         world.draw(buffer, -camera.getCameraX(), -camera.getCameraY());
         player.draw(buffer);
-        System.out.println("x : " + player.getX() + " y : " + player.getY());
+        zombie.draw(buffer);
+        //System.out.println("x : " + player.getX() + " y : " + player.getY());
         mouse.drawCursor(buffer);
         camera.updateCameraPosition(player.getX(), player.getY());
     }
@@ -48,14 +52,16 @@ public class RoomClearingGame extends Game {
         if (gamePad.isQuitPressed()) {
             stop();
         }
-        if (gamePad.isFirePressed()) {
+        if (gamePad.isFirePressed() && player.getPistolAmmo() != 0) {
             Sound.PISTOL_FIRE.play();
             player.setIsShooting(true);
+            player.lowerPistolAmmo();
         }
 
         if (gamePad.isReloadPressed()) {
             Sound.PISTOL_RELOAD.play();
             player.setIsReloading(true);
+            player.resetPistolAmmo();
         }
     }
 }

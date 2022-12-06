@@ -20,6 +20,7 @@ public class Player extends ControllableEntity {
     private int viewportY = 600 / 2;
     private boolean isShooting = false;
     private boolean isReloading = false;
+    private int pistolAmmo = 17;
     private BufferedImage[] idleFrames;
     private BufferedImage[] shootingFrames;
     private BufferedImage[] reloadingFrames;
@@ -47,20 +48,20 @@ public class Player extends ControllableEntity {
     @Override
     public void draw(Buffer buffer) {
        if (!hasMoved()) {
-           if (isShooting) {
-               buffer.drawImage(buffer.rotateImage(shootingFrames[currentShootingFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+           if (isShooting && pistolAmmo > 0) {
+               drawAnimationFrame(buffer, shootingFrames[currentShootingFrame]);
            } else if (isReloading) {
-               buffer.drawImage(buffer.rotateImage(reloadingFrames[currentReloadingFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+               drawAnimationFrame(buffer, reloadingFrames[currentReloadingFrame]);
            } else {
-               buffer.drawImage(buffer.rotateImage(idleFrames[currentIdleFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+               drawAnimationFrame(buffer, idleFrames[currentIdleFrame]);
            }
        } else if (hasMoved()) {
-           if (isShooting) {
-               buffer.drawImage(buffer.rotateImage(shootingFrames[currentShootingFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+           if (isShooting && pistolAmmo > 0) {
+               drawAnimationFrame(buffer, shootingFrames[currentShootingFrame]);
            } else if (isReloading) {
-               buffer.drawImage(buffer.rotateImage(reloadingFrames[currentReloadingFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+               drawAnimationFrame(buffer, reloadingFrames[currentReloadingFrame]);
            } else {
-               buffer.drawImage(buffer.rotateImage(movingFrames[currentMovingFrame], findSpriteRotationAngle()), viewportX - width, viewportY - height);
+               drawAnimationFrame(buffer, movingFrames[currentMovingFrame]);
            }
        }
     }
@@ -94,15 +95,35 @@ public class Player extends ControllableEntity {
         isReloading = value;
     }
 
+    public void lowerPistolAmmo() {
+        pistolAmmo--;
+    }
+
+    public void resetPistolAmmo() {
+        pistolAmmo = 17;
+    }
+
+    public int getPistolAmmo() {
+        return pistolAmmo;
+    }
+
+    private void drawAnimationFrame(Buffer buffer, BufferedImage image) {
+        buffer.drawImage(buffer.rotateImage(image, findSpriteRotationAngle()), viewportX - width, viewportY - height);
+    }
+
+
     private void cycleShootingFrames() {
-        --nextShootingFrame;
-        if (nextShootingFrame == 0) {
-            ++currentShootingFrame;
-            if (currentShootingFrame >= shootingFrames.length) {
-                currentShootingFrame = 0;
-                isShooting = false;
+        if (pistolAmmo > 0) {
+            --nextShootingFrame;
+            if (nextShootingFrame == 0) {
+                ++currentShootingFrame;
+                System.out.println(pistolAmmo);
+                if (currentShootingFrame >= shootingFrames.length) {
+                    currentShootingFrame = 0;
+                    isShooting = false;
+                }
+                nextShootingFrame = SHOOTING_ANIMATION_SPEED;
             }
-            nextShootingFrame = SHOOTING_ANIMATION_SPEED;
         }
     }
 
@@ -157,8 +178,6 @@ public class Player extends ControllableEntity {
             }
         }
     }
-
-
 
     private void loadShootingFrames() {
         shootingFrames = new BufferedImage[3];
