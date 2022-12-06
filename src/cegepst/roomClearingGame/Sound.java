@@ -6,7 +6,8 @@ import javax.sound.sampled.Clip;
 
 public enum Sound {
 
-    FIRE("fire.wav");
+    PISTOL_FIRE("pistol_fire.wav"),
+    PISTOL_RELOAD("pistol_reload.wav");
 
     private String audioResourceName;
 

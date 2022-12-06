@@ -33,10 +33,6 @@ public class MovementController extends Controller {
         return isKeyPressed(downKey);
     }
 
-    public boolean isSpacePressed() {
-        return isKeyPressed(spaceKey);
-    }
-
     public boolean isMoving() {
         return isDownPressed() || isUpPressed()
                 || isLeftPressed() || isRightPressed();

@@ -49,9 +49,13 @@ public class RoomClearingGame extends Game {
             stop();
         }
         if (gamePad.isFirePressed()) {
-            Sound.FIRE.play();
-            System.out.println("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEeee");
+            Sound.PISTOL_FIRE.play();
             player.setIsShooting(true);
+        }
+
+        if (gamePad.isReloadPressed()) {
+            Sound.PISTOL_RELOAD.play();
+            player.setIsReloading(true);
         }
     }
 }
