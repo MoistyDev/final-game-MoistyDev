@@ -6,7 +6,7 @@ import cegepst.engine.graphics.Buffer;
 public class NPC extends MovableEntity {
 
     public NPC() {
-
+        set
     }
 
     @Override
