@@ -42,10 +42,13 @@ public class RoomClearingGame extends Game {
     protected void drawOnBuffer(Buffer buffer) {
         world.draw(buffer, -camera.getCameraX(), -camera.getCameraY());
         player.draw(buffer);
-        zombie.draw(buffer);
-        //System.out.println("x : " + player.getX() + " y : " + player.getY());
         mouse.drawCursor(buffer);
         camera.updateCameraPosition(player.getX(), player.getY());
+        buffer.translate(-player.getX(), -player.getY());
+        //System.out.println("x : " + player.getX() + " y : " + player.getY());
+        zombie.draw(buffer);
+        zombie.drawHitBox(buffer);
+        buffer.translate(player.getX(), player.getY());
     }
 
     private void updateInputs() {

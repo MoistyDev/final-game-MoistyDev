@@ -40,6 +40,14 @@ public class Buffer {
         graphics.drawImage(image, x, y, null);
     }
 
+    public Graphics2D getGraphics() {
+        return this.graphics;
+    }
+
+    public void translate(int x, int y) {
+        graphics.translate(x, y);
+    }
+
     public BufferedImage rotateImage(BufferedImage image, double angle) {
         BufferedImage rotated = new BufferedImage(image.getWidth(), image.getHeight(), image.getType());
         Graphics2D graphic = rotated.createGraphics();

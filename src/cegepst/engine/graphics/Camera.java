@@ -1,5 +1,7 @@
 package cegepst.engine.graphics;
 
+import java.awt.*;
+
 public class Camera {
     private int worldSizeX = 0;
     private int worldSizeY = 0;
@@ -18,8 +20,9 @@ public class Camera {
     }
 
     public void updateCameraPosition(int playerX, int playerY) {
-        cameraX = playerX - ((viewportSizeX - worldSizeX) / 2);
-        cameraY = playerY - ((viewportSizeY - worldSizeY) / 2);
+        cameraX = playerX;
+        cameraY = playerY;
+        System.out.println("x : " + cameraX + " y : " + cameraY);
     }
 
     public int getCameraX() {

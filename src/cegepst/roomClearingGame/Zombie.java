@@ -20,6 +20,10 @@ public class Zombie extends MovableEntity {
     private int currentMovingFrame = 0;
     private int nextMovingFrame = MOVING_ANIMATION_SPEED;
     private int rotation = 90;
+    private int viewportSizeX = 800;
+    private int viewportSizeY = 600;
+    private int worldSizeX = 2816;
+    private int worldSizeY = 5120;
 
     public Zombie() {
         setDimension(128, 128);
@@ -45,10 +49,8 @@ public class Zombie extends MovableEntity {
     public void draw(Buffer buffer) {
         if (hasMoved()) {
             drawAnimationFrame(buffer, movingFrames[currentMovingFrame], rotation);
-            buffer.drawRectangle(x, y, 80, 80, Color.RED);
         } else {
             drawAnimationFrame(buffer, idleFrames[currentIdleFrame], rotation);
-            buffer.drawRectangle(x, y, 80, 80, Color.RED);
         }
     }
 
@@ -119,6 +121,6 @@ public class Zombie extends MovableEntity {
 
     private void drawAnimationFrame(Buffer buffer, BufferedImage image, int rotation) {
         buffer.drawImage(buffer.rotateImage(image, rotation), x, y);
-        System.out.println("x :" + x + " y : " + y);
+        //System.out.println("x :" + x + " y : " + y);
     }
 }
