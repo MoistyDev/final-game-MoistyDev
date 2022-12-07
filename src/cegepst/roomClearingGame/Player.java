@@ -38,7 +38,7 @@ public class Player extends ControllableEntity {
         super(controller);
         this.mouse = mouse;
         setDimension(64, 64);
-        setSpeed(4);
+        setSpeed(10);
     }
 
     public void load() {
@@ -108,7 +108,8 @@ public class Player extends ControllableEntity {
     }
 
     private void drawAnimationFrame(Buffer buffer, BufferedImage image) {
-        buffer.drawImage(buffer.rotateImage(image, findSpriteRotationAngle()), viewportX - width, viewportY - height);
+        //buffer.drawImage(buffer.rotateImage(image, findSpriteRotationAngle()), viewportX - width, viewportY - height);
+        buffer.drawRectangle(800 / 2, 600 / 2, 16, 16, Color.RED);
     }
 
 
