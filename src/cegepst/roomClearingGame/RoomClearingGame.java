@@ -25,7 +25,7 @@ public class RoomClearingGame extends Game {
         zombie = new Zombie();
         player.load();
         mouse.load();
-        camera = new Camera(world.getWidth(), world.getHeight(), 800, 600, 200, 300);
+        camera = new Camera(world.getWidth(), world.getHeight(), 800, 600, 500, 3000);
         player.teleport(camera.getCameraX(), camera.getCameraY());
         //RenderingEngine.getInstance().getScreen().fullScreen();
         RenderingEngine.getInstance().getScreen().hideCursor();

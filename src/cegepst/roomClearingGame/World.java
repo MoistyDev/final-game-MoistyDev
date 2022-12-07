@@ -51,7 +51,22 @@ public class World {
     }
 
     private void setBuildingWalls() {
-
+        //top red walls
+        setBoundary(636, 310, 736, 16);
+        setBoundary(1585, 310, 736, 16);
+        //left red walls
+        setBoundary(657, 310, 16, 1250);
+        setBoundary(657, 1710, 16, 1520);
+        //right red wall
+        setBoundary(2270, 310, 16, 2912);
+        //bottom left walls
+        setBoundary(657, 3220, 300, 16);
+        setBoundary(945, 3220, 16, 176);
+        setBoundary(945, 3380, 260, 16);
+        //bottom right walls
+        setBoundary(1744, 3220, 540, 16);
+        setBoundary(1744, 3220, 16, 176);
+        setBoundary(1470, 3380, 290, 16);
     }
 
     private void setMapWalls() {
