@@ -108,10 +108,8 @@ public class Player extends ControllableEntity {
     }
 
     private void drawAnimationFrame(Buffer buffer, BufferedImage image) {
-        //buffer.drawImage(buffer.rotateImage(image, findSpriteRotationAngle()), viewportX - width, viewportY - height);
-        buffer.drawRectangle(800 / 2 - 16, 600 / 2 - 16, 16, 16, Color.RED);
+        buffer.drawImage(buffer.rotateImage(image, findSpriteRotationAngle()), viewportX - width, viewportY - height);
     }
-
 
     private void cycleShootingFrames() {
         if (pistolAmmo > 0) {

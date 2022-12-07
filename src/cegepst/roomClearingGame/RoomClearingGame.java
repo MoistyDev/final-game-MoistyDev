@@ -27,6 +27,7 @@ public class RoomClearingGame extends Game {
         mouse.load();
         camera = new Camera(world.getWidth(), world.getHeight(), 800, 600, 500, 3000);
         player.teleport(camera.getCameraX(), camera.getCameraY());
+        zombie.teleport(1396, 658);
         //RenderingEngine.getInstance().getScreen().fullScreen();
         RenderingEngine.getInstance().getScreen().hideCursor();
     }
@@ -42,13 +43,12 @@ public class RoomClearingGame extends Game {
     protected void drawOnBuffer(Buffer buffer) {
         world.draw(buffer, -camera.getCameraX(), -camera.getCameraY());
         player.draw(buffer);
-        mouse.drawCursor(buffer);
         camera.updateCameraPosition(player.getX(), player.getY());
         buffer.translate(-player.getX(), -player.getY());
         //System.out.println("x : " + player.getX() + " y : " + player.getY());
         zombie.draw(buffer);
-        zombie.drawHitBox(buffer);
         buffer.translate(player.getX(), player.getY());
+        mouse.drawCursor(buffer);
     }
 
     private void updateInputs() {

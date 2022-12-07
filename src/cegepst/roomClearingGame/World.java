@@ -47,7 +47,33 @@ public class World {
     }
 
     private void setInnerBuildingWalls() {
+        //lower restroom
+        setBoundary(656, 2244, 195, 8);
+        setBoundary(1040, 2244, 255, 8);
+        //upper restroom
+        setBoundary(656,1440, 689, 8);
+        //right restroom
+        setBoundary(1290, 1240, 8, 290);
+        setBoundary(1290, 1710, 8, 540);
+        //top stall
+        setBoundary(1110, 1750, 180, 8);
+        //middle stall
+        setBoundary(1110, 2000, 180, 8);
+        //left walls
+        setBoundary(1110, 1750, 8, 50);
+        setBoundary(1110, 1985, 8, 45);
+        setBoundary(1110, 2205, 8, 30);
 
+        //top freezer
+        setBoundary(1865, 1228, 416, 8);
+        //left freezer
+        setBoundary(1865, 1228, 8, 756);
+        setBoundary(1865, 2150, 8, 100);
+        //bottom freezer
+        setBoundary(1865, 2244, 365, 8);
+        //middle wall
+        setBoundary(1290,1762, 236, 8);
+        setBoundary(1665,1762, 236, 8);
     }
 
     private void setBuildingWalls() {
@@ -67,6 +93,19 @@ public class World {
         setBoundary(1744, 3220, 540, 16);
         setBoundary(1744, 3220, 16, 176);
         setBoundary(1470, 3380, 290, 16);
+        //top shipping wall
+        setBoundary(-380, 310, 1016, 16);
+        //left shipping wall
+        setBoundary(-380, 310, 32, 4304);
+        //bottom empty building
+        setBoundary(-380, 4590, 376, 32);
+        //right empty building
+        setBoundary(-40, 2720, 32, 1920);
+        //top empty building
+        setBoundary(-380, 2730, 340, 32);
+        //bottom shipping walls
+        setBoundary(-40, 2720, 270, 8);
+        setBoundary(455, 2720, 200, 8);
     }
 
     private void setMapWalls() {
