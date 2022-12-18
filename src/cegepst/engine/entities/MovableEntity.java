@@ -14,8 +14,6 @@ public abstract class MovableEntity extends StaticEntity {
     private int lastY = Integer.MIN_VALUE;
     private boolean moved = false;
     private Collision collision;
-    private int viewportSizeX = 800;
-    private int viewportSizeY = 600;
 
     public MovableEntity() {
         collision = new Collision(this);

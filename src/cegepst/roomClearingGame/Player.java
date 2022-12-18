@@ -40,6 +40,8 @@ public class Player extends ControllableEntity {
         this.mouse = mouse;
         setDimension(64, 64);
         setSpeed(4);
+        x = x + 800 / 2;
+        y = y + 600 / 2;
     }
 
     public void load() {

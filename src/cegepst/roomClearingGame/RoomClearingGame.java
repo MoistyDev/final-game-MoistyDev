@@ -25,7 +25,7 @@ public class RoomClearingGame extends Game {
         player.load();
         mouse.load();
         camera = new Camera(world.getWidth(), world.getHeight(), 800, 600, -380, -280);
-        zombie = new Zombie(world, player, camera);
+        zombie = new Zombie(world, player);
         zombie.teleport(1100, 658);
         camera.updateCameraPosition(1200, 658);
         player.teleport(camera.getCameraX(), camera.getCameraY());
@@ -56,7 +56,7 @@ public class RoomClearingGame extends Game {
 
     private void updateZombieActions() {
         zombie.determineDirection();
-        zombie.findZombieRotation(player.getX(), player.getY());
+        zombie.findZombieRotation();
         zombie.move();
         zombie.update();
         zombie.tryDealingDamage(player);
