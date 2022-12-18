@@ -33,6 +33,7 @@ public class Player extends ControllableEntity {
     private int nextShootingFrame = SHOOTING_ANIMATION_SPEED;
     private int currentReloadingFrame = 0;
     private int nextReloadingFrame = RELOADING_ANIMATION_SPEED;
+    private int health = 100;
 
     public Player(MovementController controller, Mouse mouse) {
         super(controller);
@@ -72,19 +73,22 @@ public class Player extends ControllableEntity {
         moveWithController();
         if (hasMoved()) {
             cycleMovingFrames();
-            if (isShooting) {
-                cycleShootingFrames();
-            } else if (isReloading){
-                cycleReloadingFrames();
-            }
         } else {
             cycleIdleFrames();
-            if (isShooting) {
-                cycleShootingFrames();
-            } else if (isReloading) {
-                cycleReloadingFrames();
-            }
         }
+        if (isShooting) {
+            cycleShootingFrames();
+        } else if (isReloading){
+            cycleReloadingFrames();
+        }
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void getDamaged(int damage) {
+        this.health -= damage;
     }
 
     public void setIsShooting(boolean value) {

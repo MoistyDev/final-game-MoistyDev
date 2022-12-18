@@ -3,11 +3,15 @@ package cegepst.roomClearingGame;
 import cegepst.engine.controls.Direction;
 import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.graphics.Buffer;
+import cegepst.engine.graphics.Camera;
+import cegepst.roomClearingGame.ai.Pathfinding;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Vector;
 
 public class Zombie extends MovableEntity {
     private static final int MOVING_ANIMATION_SPEED = 3;
@@ -24,20 +28,25 @@ public class Zombie extends MovableEntity {
     private int viewportSizeY = 600;
     private int worldSizeX = 2816;
     private int worldSizeY = 5120;
+    private World world;
+    private Player player;
+    private Camera camera;
+    private int step = 0;
+    private int health = 100;
 
-    public Zombie() {
+    public Zombie(World world, Player player, Camera camera) {
         setDimension(128, 128);
         setSpeed(1);
-        setDirection(Direction.DOWN);
         loadIdleFrames();
         loadMovingFrames();
+        this.world = world;
+        this.player = player;
+        this.camera = camera;
     }
 
     @Override
     public void update() {
         super.update();
-        move(Direction.DOWN);
-        findZombieRotation();
         if (hasMoved()) {
             cycleMovingFrames();
         } else {
@@ -54,7 +63,31 @@ public class Zombie extends MovableEntity {
         }
     }
 
-    private void findZombieRotation() {
+    public void tryDealingDamage(Player player) {
+        if (this.hitBoxIntersectWith(player)) {
+            player.getDamaged(10);
+            System.out.println("damaged");
+        }
+    }
+
+    public void determineDirection() {
+        if (x < player.getX()) {
+            setDirection(Direction.RIGHT);
+        } else
+        if (x > player.getX()) {
+            setDirection(Direction.LEFT);
+        } else
+        if (y < player.getY()) {
+            setDirection(Direction.DOWN);
+        } else
+        if (y > player.getY()) {
+            setDirection(Direction.UP);
+        } else {
+            setDirection(Direction.NONE);
+        }
+    }
+
+    public void findZombieRotation(int playerX, int playerY) {
         if (getDirection() == Direction.UP) {
             rotation = 270;
         } else if (getDirection() == Direction.DOWN) {
@@ -119,7 +152,7 @@ public class Zombie extends MovableEntity {
         return scaledImage;
     }
 
-    private void drawAnimationFrame(Buffer buffer, BufferedImage image, int rotation) {
+    private void drawAnimationFrame(Buffer buffer, BufferedImage image, double rotation) {
         buffer.drawImage(buffer.rotateImage(image, rotation), x, y);
         //System.out.println("x :" + x + " y : " + y);
     }

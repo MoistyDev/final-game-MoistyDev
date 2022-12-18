@@ -22,7 +22,7 @@ public class Camera {
     public void updateCameraPosition(int playerX, int playerY) {
         cameraX = playerX;
         cameraY = playerY;
-        System.out.println("x : " + cameraX + " y : " + cameraY);
+        //System.out.println("x : " + cameraX + " y : " + cameraY);
     }
 
     public int getCameraX() {

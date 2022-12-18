@@ -7,23 +7,32 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class World {
-    public static int worldSizeX;
-    public static int worldSizeY;
+    public final int worldSizeX;
+    public final int worldSizeY;
     private final String MAP_PATH = "images/Gas Station.png";
     private BufferedImage background;
     private BufferedImage bounds;
     private ArrayList<Boundary> boundaries;
+    private int[][] cells;
+    public int maxColSize;
+    public int maxRowSize;
 
     public World() {
         load();
         worldSizeX = background.getWidth();
         worldSizeY = background.getHeight();
+        maxColSize = background.getWidth() / 8;
+        maxRowSize = background.getHeight() / 8;
         boundaries = new ArrayList<>();
         setMapWalls();
         setBuildingWalls();
         setInnerBuildingWalls();
+        cells = new int[maxColSize][maxRowSize];
+        generateCells();
     }
 
     public void draw(Buffer buffer, int cameraX, int cameraY) {
@@ -36,6 +45,29 @@ public class World {
 
     public int getHeight() {
         return background.getHeight();
+    }
+
+    public int[][] getCells() {
+        return cells;
+    }
+
+    public ArrayList<Boundary> getBoundaries() {
+        return boundaries;
+    }
+
+    private void generateCells() {
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                /*for (Boundary boundary : boundaries) {
+                    if (boundary.getX() == j && boundary.getY() == i) {
+                        cells[i][j] = true;
+                    } else {
+                        cells[i][j] = false;
+                    }
+                }*/
+                cells[i][j] = 0;
+            }
+        }
     }
 
     private void load() {

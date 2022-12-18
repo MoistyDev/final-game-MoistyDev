@@ -22,12 +22,14 @@ public class RoomClearingGame extends Game {
         mouse = new Mouse();
         world = new World();
         player = new Player(gamePad, mouse);
-        zombie = new Zombie();
         player.load();
         mouse.load();
-        camera = new Camera(world.getWidth(), world.getHeight(), 800, 600, 500, 3000);
+        camera = new Camera(world.getWidth(), world.getHeight(), 800, 600, -380, -280);
+        zombie = new Zombie(world, player, camera);
+        zombie.teleport(1100, 658);
+        camera.updateCameraPosition(1200, 658);
         player.teleport(camera.getCameraX(), camera.getCameraY());
-        zombie.teleport(1396, 658);
+
         //RenderingEngine.getInstance().getScreen().fullScreen();
         RenderingEngine.getInstance().getScreen().hideCursor();
     }
@@ -36,7 +38,7 @@ public class RoomClearingGame extends Game {
     protected void update() {
         updateInputs();
         player.update();
-        zombie.update();
+        updateZombieActions();
     }
 
     @Override
@@ -45,10 +47,17 @@ public class RoomClearingGame extends Game {
         player.draw(buffer);
         camera.updateCameraPosition(player.getX(), player.getY());
         buffer.translate(-player.getX(), -player.getY());
-        //System.out.println("x : " + player.getX() + " y : " + player.getY());
         zombie.draw(buffer);
         buffer.translate(player.getX(), player.getY());
         mouse.drawCursor(buffer);
+    }
+
+    private void updateZombieActions() {
+        zombie.determineDirection();
+        zombie.findZombieRotation(player.getX(), player.getY());
+        zombie.move();
+        zombie.update();
+        zombie.tryDealingDamage(player);
     }
 
     private void updateInputs() {

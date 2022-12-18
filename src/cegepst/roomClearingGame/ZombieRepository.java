@@ -1,5 +1,5 @@
 package cegepst.roomClearingGame;
 
-public class Weapon {
+public class ZombieRepository {
 
 }
