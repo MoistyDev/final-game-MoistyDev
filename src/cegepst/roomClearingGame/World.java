@@ -58,14 +58,13 @@ public class World {
     private void generateCells() {
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
-                /*for (Boundary boundary : boundaries) {
-                    if (boundary.getX() == j && boundary.getY() == i) {
-                        cells[i][j] = true;
+                for (Boundary boundary : boundaries) {
+                    if (j >= boundary.getX() && j <= boundary.getX() + boundary.getWidth() && i >= boundary.getY() && i >= boundary.getY() + boundary.getHeight()) {
+                        cells[i][j] = 1;
                     } else {
-                        cells[i][j] = false;
+                        cells[i][j] = 0;
                     }
-                }*/
-                cells[i][j] = 0;
+                }
             }
         }
     }

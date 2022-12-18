@@ -33,6 +33,7 @@ public class Zombie extends MovableEntity {
     private Camera camera;
     private int step = 0;
     private int health = 100;
+    private Pathfinding pathfinder;
 
     public Zombie(World world, Player player, Camera camera) {
         setDimension(128, 128);
@@ -42,6 +43,7 @@ public class Zombie extends MovableEntity {
         this.world = world;
         this.player = player;
         this.camera = camera;
+        pathfinder = new Pathfinding(world);
     }
 
     @Override
@@ -71,16 +73,16 @@ public class Zombie extends MovableEntity {
     }
 
     public void determineDirection() {
-        if (x < player.getX()) {
+        if (x < player.getX() + 800 / 2) {
             setDirection(Direction.RIGHT);
         } else
-        if (x > player.getX()) {
+        if (x > player.getX() + 800 / 2) {
             setDirection(Direction.LEFT);
         } else
-        if (y < player.getY()) {
+        if (y < player.getY() + 600 / 2) {
             setDirection(Direction.DOWN);
         } else
-        if (y > player.getY()) {
+        if (y > player.getY() + 600 / 2) {
             setDirection(Direction.UP);
         } else {
             setDirection(Direction.NONE);

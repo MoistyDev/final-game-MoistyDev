@@ -48,6 +48,8 @@ public class RoomClearingGame extends Game {
         camera.updateCameraPosition(player.getX(), player.getY());
         buffer.translate(-player.getX(), -player.getY());
         zombie.draw(buffer);
+        buffer.drawRectangle(camera.getCameraX() + 800 / 2, camera.getCameraY() + 600 / 2, 16, 16, Color.red);
+
         buffer.translate(player.getX(), player.getY());
         mouse.drawCursor(buffer);
     }
