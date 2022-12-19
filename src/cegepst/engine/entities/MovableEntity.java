@@ -36,6 +36,10 @@ public abstract class MovableEntity extends StaticEntity {
         return moved;
     }
 
+    public void setMoved(boolean value) {
+        this.moved = value;
+    }
+
     public void move(Direction direction) {
         this.direction = direction;
         move();

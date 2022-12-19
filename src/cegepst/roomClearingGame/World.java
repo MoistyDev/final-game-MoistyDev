@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class World {
     public final int worldSizeX;
@@ -53,6 +54,14 @@ public class World {
 
     public ArrayList<Boundary> getBoundaries() {
         return boundaries;
+    }
+
+    public int getRandomCoordX() {
+        return ThreadLocalRandom.current().nextInt(200, (worldSizeX - 400) + 1);
+    }
+
+    public int getRandomCoordY() {
+        return ThreadLocalRandom.current().nextInt(200, (worldSizeY - 400) + 1);
     }
 
     private void generateCells() {

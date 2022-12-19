@@ -89,7 +89,7 @@ public class Mouse implements MouseMotionListener, MouseInputListener {
     }
 
     public void drawCursor(Buffer buffer) {
-        buffer.drawImage(spriteSheet, x - 16, y - 16);
+        buffer.drawImage(spriteSheet, (x - 16), y - 16);
     }
 
     private void bindClick(int inputCode) {
