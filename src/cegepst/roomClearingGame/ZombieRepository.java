@@ -19,6 +19,10 @@ public class ZombieRepository implements Iterable<Zombie> {
         return instance;
     }
 
+    public static void killInstance() {
+        ZombieRepository.instance = null;
+    }
+
     public void registerZombie(Zombie zombie) {
         registeredZombies.add(zombie);
     }

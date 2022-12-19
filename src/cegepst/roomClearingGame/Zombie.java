@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Vector;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Zombie extends MovableEntity {
     private static final int MOVING_ANIMATION_SPEED = 3;
@@ -26,7 +28,7 @@ public class Zombie extends MovableEntity {
     private int nextAttackFrame = ATTACK_ANIMATION_SPEED;
     private int rotation = 90;
     private int attackDelay = 0;
-    private int movementCooldown = 10;
+    private int calloutCooldown = 0;
     private World world;
     private Player player;
     private int health = 100;
@@ -34,6 +36,7 @@ public class Zombie extends MovableEntity {
     private boolean idle;
 
     public Zombie(World world, Player player) {
+        //CollidableRepository.getInstance().registerEntity(this);
         setDimension(128, 128);
         setSpeed(2);
         loadIdleFrames();
@@ -46,11 +49,13 @@ public class Zombie extends MovableEntity {
     @Override
     public void update() {
         super.update();
-        movementCooldown--;
         determineDirection();
         findRotation();
         if (attackDelay != 0) {
             attackDelay--;
+        }
+        if (calloutCooldown != 0) {
+            calloutCooldown--;
         }
         if (attacking) {
             cycleAttackingFrames();
@@ -73,15 +78,19 @@ public class Zombie extends MovableEntity {
     }
 
     public void getDamaged(int damage) {
+        if (calloutCooldown == 0) {
+            playRandomHurtSound();
+        }
         health -= damage;
     }
 
     public void tryDealingDamage(Player player) {
         if (attackDelay == 0) {
-            if (x + width / 2 == player.getX() && y + height / 2 == player.getY()) {
+            if (x <= player.getX() && x + width >= player.getX() && y <= player.getY() && y + height >= player.getY()) {
                 attacking = true;
                 player.getDamaged(10);
                 System.out.println("DAMAGING PLAYER");
+                attackDelay = 50;
             }
         }
     }
@@ -91,30 +100,29 @@ public class Zombie extends MovableEntity {
     }
 
     public void determineDirection() {
-        if (x + width / 2 < player.getX()) {
+        if (x + width < player.getX()) {
             setDirection(Direction.RIGHT);
             setMoved(true);
             move();
-        }else if (x + width / 2 > player.getX()) {
+        } else if (x > player.getX()) {
             setDirection(Direction.LEFT);
             setMoved(true);
             move();
-        } else if (y + height / 2 < player.getY()) {
+        } else if (y + height < player.getY()) {
             setDirection(Direction.DOWN);
             setMoved(true);
             move();
-        } else if (y + height / 2 > player.getY()) {
+        } else if (y > player.getY()) {
             setDirection(Direction.UP);
             setMoved(true);
             move();
         } else {
-            setDirection(Direction.NONE);
             tryDealingDamage(player);
         }
     }
 
     public void findRotation() {
-        if (getDirection() == Direction.UP) {
+        /*if (getDirection() == Direction.UP) {
             rotation = 30;
         } else if (getDirection() == Direction.DOWN) {
             rotation = 90;
@@ -122,6 +130,36 @@ public class Zombie extends MovableEntity {
             rotation = 160;
         } else if (getDirection() == Direction.RIGHT) {
             rotation = 0;
+        }*/
+
+
+    }
+
+    private void playRandomHurtSound() {
+        calloutCooldown = 50;
+        int number = ThreadLocalRandom.current().nextInt(1, 7 + 1);
+        switch (number) {
+            case 1:
+                Sound.ZOMBIE_GRUNT_1.play();
+                break;
+            case 2:
+                Sound.ZOMBIE_GRUNT_2.play();
+                break;
+            case 3:
+                Sound.ZOMBIE_GRUNT_3.play();
+                break;
+            case 4:
+                Sound.ZOMBIE_GRUNT_4.play();
+                break;
+            case 5:
+                Sound.ZOMBIE_GRUNT_5.play();
+                break;
+            case 6:
+                Sound.ZOMBIE_YELL_3.play();
+                break;
+            case 7:
+                Sound.ZOMBIE_YELL_4.play();
+                break;
         }
     }
 
