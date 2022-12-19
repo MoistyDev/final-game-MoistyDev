@@ -37,6 +37,7 @@ public class RoomClearingGame extends Game {
         RenderingEngine.getInstance().getScreen().hideCursor();
         round = 1;
         createZombies();
+        Sound.THEME.play();
     }
 
     @Override
@@ -58,11 +59,11 @@ public class RoomClearingGame extends Game {
         buffer.translate(-player.getX() + 800 / 2, -player.getY() + 600 / 2);
         for (Zombie zombie : zombies) {
             zombie.draw(buffer);
-            //System.out.println("ZOMBIE : X - " + zombie.getX() + " Y - " + zombie.getY());
+            //System.out.println("ZOMBIE : X - " + (zombie.getX() - 400) + " Y - " + (zombie.getY() - 300));
         }
         buffer.translate(player.getX() - 800 / 2, player.getY() - 600 / 2);
         mouse.drawCursor(buffer);
-        //System.out.println("CURSOR : X - " + (mouse.getX() + player.getX() - 800 / 2) + " Y - " + (mouse.getY() + player.getY() - 600 / 2));
+        //System.out.println("CURSOR : X - " + (player.getX() - 800 / 2) + " Y - " + (player.getY() - 600 / 2));
 
     }
 
@@ -84,6 +85,12 @@ public class RoomClearingGame extends Game {
 
     private void startNextRound() {
         round++;
+        if (round == 5) {
+            Sound.THEME.stop();
+            Sound.FINAL_ROUND_CHANGE.play();
+        } else {
+            Sound.ROUND_CHANGE.play();
+        }
         createZombies();
     }
 
@@ -114,6 +121,7 @@ public class RoomClearingGame extends Game {
                 }
                 break;
             case 5 :
+                Sound.FINAL_ROUND.play();
                 for (int i = 0; i < 30; i++) {
                     createZombie();
                 }

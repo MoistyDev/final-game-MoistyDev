@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Player extends ControllableEntity {
     private static final int MOVING_ANIMATION_SPEED = 3;
@@ -98,6 +99,7 @@ public class Player extends ControllableEntity {
     }
 
     public void getDamaged(int damage) {
+        playRandomHurtSound();
         this.health -= damage;
     }
 
@@ -119,6 +121,37 @@ public class Player extends ControllableEntity {
 
     public int getPistolAmmo() {
         return pistolAmmo;
+    }
+
+    private void playRandomHurtSound() {
+        int number = ThreadLocalRandom.current().nextInt(1, 9 + 1);
+        switch (number) {
+            case 1:
+                Sound.HURT_1.play();
+                break;
+            case 2:
+                Sound.HURT_2.play();
+                break;
+            case 3:
+                Sound.HURT_3.play();
+                break;
+            case 4:
+                Sound.HURT_4.play();
+                break;
+            case 5:
+                Sound.HURT_5.play();
+                break;
+            case 6:
+                Sound.HURT_6.play();
+                break;
+            case 7:
+                Sound.HURT_7.play();
+                break;
+            case 9:
+                Sound.HURT_8.play();
+                break;
+
+        }
     }
 
     private void drawAnimationFrame(Buffer buffer, BufferedImage image) {

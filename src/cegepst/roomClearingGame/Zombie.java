@@ -25,6 +25,8 @@ public class Zombie extends MovableEntity {
     private int currentAttackFrame = 0;
     private int nextAttackFrame = ATTACK_ANIMATION_SPEED;
     private int rotation = 90;
+    private int attackDelay = 0;
+    private int movementCooldown = 10;
     private World world;
     private Player player;
     private int health = 100;
@@ -44,14 +46,18 @@ public class Zombie extends MovableEntity {
     @Override
     public void update() {
         super.update();
+        movementCooldown--;
         determineDirection();
         findRotation();
+        if (attackDelay != 0) {
+            attackDelay--;
+        }
         if (attacking) {
             cycleAttackingFrames();
-        } else if (idle) {
-            cycleIdleFrames();
-        } else {
+        } else if (hasMoved()) {
             cycleMovingFrames();
+        } else {
+            cycleIdleFrames();
         }
     }
 
@@ -59,10 +65,10 @@ public class Zombie extends MovableEntity {
     public void draw(Buffer buffer) {
             if (attacking) {
                 drawAnimationFrame(buffer, attackingFrames[currentAttackFrame], rotation);
-            } else if (idle) {
-                drawAnimationFrame(buffer, idleFrames[currentIdleFrame], rotation);
-            } else {
+            } else if (hasMoved()) {
                 drawAnimationFrame(buffer, movingFrames[currentMovingFrame], rotation);
+            } else {
+                drawAnimationFrame(buffer, idleFrames[currentIdleFrame], rotation);
             }
     }
 
@@ -71,10 +77,12 @@ public class Zombie extends MovableEntity {
     }
 
     public void tryDealingDamage(Player player) {
-        if ((x + width / 2 == player.getX()) && (y + height / 2 == player.getY())) {
-            attacking = true;
-            player.getDamaged(1);
-            System.out.println("damaged player");
+        if (attackDelay == 0) {
+            if (x + width / 2 == player.getX() && y + height / 2 == player.getY()) {
+                attacking = true;
+                player.getDamaged(10);
+                System.out.println("DAMAGING PLAYER");
+            }
         }
     }
 
@@ -85,22 +93,24 @@ public class Zombie extends MovableEntity {
     public void determineDirection() {
         if (x + width / 2 < player.getX()) {
             setDirection(Direction.RIGHT);
-        } else
-        if (x + width / 2 > player.getX()) {
+            setMoved(true);
+            move();
+        }else if (x + width / 2 > player.getX()) {
             setDirection(Direction.LEFT);
-        } else
-        if (y + height / 2 < player.getY()) {
+            setMoved(true);
+            move();
+        } else if (y + height / 2 < player.getY()) {
             setDirection(Direction.DOWN);
-        } else
-        if (y + height / 2 > player.getY()) {
+            setMoved(true);
+            move();
+        } else if (y + height / 2 > player.getY()) {
             setDirection(Direction.UP);
+            setMoved(true);
+            move();
         } else {
             setDirection(Direction.NONE);
-            idle = true;
-            return;
+            tryDealingDamage(player);
         }
-        setMoved(true);
-        move();
     }
 
     public void findRotation() {
