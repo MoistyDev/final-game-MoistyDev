@@ -21,6 +21,10 @@ public class RenderingEngine {
         return instance;
     }
 
+    public JPanel getPanel() {
+        return panel;
+    }
+
     public Screen getScreen() {
         return screen;
     }
@@ -74,7 +78,7 @@ public class RenderingEngine {
 
     private void initializeFrame() {
         screen = new Screen();
-        screen.setTitle("Test game");
+        screen.setTitle("Zombie Game");
     }
 
     private RenderingHints buildRenderingHints() {

@@ -4,7 +4,6 @@ import javax.sound.sampled.*;
 import java.io.IOException;
 
 public enum Sound {
-
     PISTOL_FIRE("pistol_fire.wav"),
     PISTOL_RELOAD("pistol_reload.wav"),
     ROUND_CHANGE("round_change.wav"),
@@ -18,7 +17,15 @@ public enum Sound {
     HURT_5("hurt_5.wav"),
     HURT_6("hurt_6.wav"),
     HURT_7("hurt_7.wav"),
-    HURT_8("hurt_8.wav");
+    HURT_8("hurt_8.wav"),
+    HURT_9("hurt_9.wav"),
+    ZOMBIE_GRUNT_1("zombie_grunt_1.wav"),
+    ZOMBIE_GRUNT_2("zombie_grunt_2.wav"),
+    ZOMBIE_GRUNT_3("zombie_grunt_3.wav"),
+    ZOMBIE_GRUNT_4("zombie_grunt_4.wav"),
+    ZOMBIE_GRUNT_5("zombie_grunt_5.wav"),
+    ZOMBIE_YELL_3("zombie_yell_3.wav"),
+    ZOMBIE_YELL_4("zombie_yell_4.wav");
 
     private String audioResourceName;
 

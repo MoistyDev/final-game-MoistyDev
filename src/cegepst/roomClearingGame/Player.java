@@ -35,6 +35,7 @@ public class Player extends ControllableEntity {
     private int currentReloadingFrame = 0;
     private int nextReloadingFrame = RELOADING_ANIMATION_SPEED;
     private int health = 100;
+    private int calloutCooldown = 0;
 
     public Player(MovementController controller, Mouse mouse) {
         super(controller);
@@ -71,6 +72,9 @@ public class Player extends ControllableEntity {
     @Override
     public void update() {
         super.update();
+        if (calloutCooldown != 0) {
+            calloutCooldown--;
+        }
         moveWithController();
         if (hasMoved()) {
             cycleMovingFrames();
@@ -82,6 +86,12 @@ public class Player extends ControllableEntity {
         } else if (isReloading){
             cycleReloadingFrames();
         }
+    }
+
+    public void resetPlayer() {
+        resetPistolAmmo();
+        calloutCooldown = 0;
+        health = 100;
     }
 
     public int getHealth() {
@@ -101,6 +111,10 @@ public class Player extends ControllableEntity {
     public void getDamaged(int damage) {
         playRandomHurtSound();
         this.health -= damage;
+    }
+
+    public boolean isDead() {
+        return health <= 0;
     }
 
     public void setIsShooting(boolean value) {
@@ -124,33 +138,38 @@ public class Player extends ControllableEntity {
     }
 
     private void playRandomHurtSound() {
-        int number = ThreadLocalRandom.current().nextInt(1, 9 + 1);
-        switch (number) {
-            case 1:
-                Sound.HURT_1.play();
-                break;
-            case 2:
-                Sound.HURT_2.play();
-                break;
-            case 3:
-                Sound.HURT_3.play();
-                break;
-            case 4:
-                Sound.HURT_4.play();
-                break;
-            case 5:
-                Sound.HURT_5.play();
-                break;
-            case 6:
-                Sound.HURT_6.play();
-                break;
-            case 7:
-                Sound.HURT_7.play();
-                break;
-            case 9:
-                Sound.HURT_8.play();
-                break;
-
+        if (calloutCooldown == 0 && !isDead()) {
+            calloutCooldown = 80;
+            int number = ThreadLocalRandom.current().nextInt(1, 9 + 1);
+            switch (number) {
+                case 1:
+                    Sound.HURT_1.play();
+                    break;
+                case 2:
+                    Sound.HURT_2.play();
+                    break;
+                case 3:
+                    Sound.HURT_3.play();
+                    break;
+                case 4:
+                    Sound.HURT_4.play();
+                    break;
+                case 5:
+                    Sound.HURT_5.play();
+                    break;
+                case 6:
+                    Sound.HURT_6.play();
+                    break;
+                case 7:
+                    Sound.HURT_7.play();
+                    break;
+                case 8:
+                    Sound.HURT_8.play();
+                    break;
+                case 9 :
+                    Sound.HURT_9.play();
+                    break;
+            }
         }
     }
 
