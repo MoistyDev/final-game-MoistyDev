@@ -122,17 +122,7 @@ public class Zombie extends MovableEntity {
     }
 
     public void findRotation() {
-        /*if (getDirection() == Direction.UP) {
-            rotation = 30;
-        } else if (getDirection() == Direction.DOWN) {
-            rotation = 90;
-        } else if (getDirection() == Direction.LEFT) {
-            rotation = 160;
-        } else if (getDirection() == Direction.RIGHT) {
-            rotation = 0;
-        }*/
-
-
+        rotation = (int) findSpriteRotationAngle() + 30;
     }
 
     private void playRandomHurtSound() {
@@ -243,5 +233,11 @@ public class Zombie extends MovableEntity {
     private void drawAnimationFrame(Buffer buffer, BufferedImage image, double rotation) {
         buffer.drawImage(buffer.rotateImage(image, rotation), x, y);
         //System.out.println("x :" + x + " y : " + y);
+    }
+
+    private double findSpriteRotationAngle() {
+        int deltaX = x + width / 2 - player.getX();
+        int deltaY = y + height / 2 - player.getY();
+        return -Math.atan2(deltaX, deltaY);
     }
 }
