@@ -1,9 +1,9 @@
 package cegepst.roomClearingGame;
 
 import cegepst.engine.controls.Direction;
+import cegepst.engine.entities.CollidableRepository;
 import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.graphics.Buffer;
-import cegepst.engine.graphics.Camera;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class Zombie extends MovableEntity {
     private static final int MOVING_ANIMATION_SPEED = 3;
-    private static final int ATTACK_ANIMATION_SPEED = 3;
+    private static final int ATTACK_ANIMATION_SPEED = 5;
     private static final int IDLE_ANIMATION_SPEED = 7;
 
     private BufferedImage[] movingFrames;
@@ -29,10 +29,11 @@ public class Zombie extends MovableEntity {
     private Player player;
     private int health = 100;
     private boolean attacking;
+    private boolean idle;
 
     public Zombie(World world, Player player) {
         setDimension(128, 128);
-        setSpeed(1);
+        setSpeed(2);
         loadIdleFrames();
         loadMovingFrames();
         loadAttackingFrames();
@@ -43,54 +44,68 @@ public class Zombie extends MovableEntity {
     @Override
     public void update() {
         super.update();
-        if (hasMoved()) {
-            cycleMovingFrames();
-        } else if (attacking) {
+        determineDirection();
+        findRotation();
+        if (attacking) {
             cycleAttackingFrames();
-            attacking = false;
-        } else {
+        } else if (idle) {
             cycleIdleFrames();
+        } else {
+            cycleMovingFrames();
         }
-
     }
 
     @Override
     public void draw(Buffer buffer) {
-        if (hasMoved()) {
-            drawAnimationFrame(buffer, movingFrames[currentMovingFrame], rotation);
-        } else {
-            drawAnimationFrame(buffer, idleFrames[currentIdleFrame], rotation);
-        }
+            if (attacking) {
+                drawAnimationFrame(buffer, attackingFrames[currentAttackFrame], rotation);
+            } else if (idle) {
+                drawAnimationFrame(buffer, idleFrames[currentIdleFrame], rotation);
+            } else {
+                drawAnimationFrame(buffer, movingFrames[currentMovingFrame], rotation);
+            }
+    }
+
+    public void getDamaged(int damage) {
+        health -= damage;
     }
 
     public void tryDealingDamage(Player player) {
-        if ((x + width / 2 == player.getX() + 800 / 2) && (y + height / 2 == player.getY() + 600 / 2)) {
+        if ((x + width / 2 == player.getX()) && (y + height / 2 == player.getY())) {
             attacking = true;
             player.getDamaged(1);
-            System.out.println("damaged");
+            System.out.println("damaged player");
         }
+    }
+
+    public boolean checkIfDead() {
+        return health <= 0;
     }
 
     public void determineDirection() {
-        if (x + width / 2 < player.getX() + 800 / 2) {
+        if (x + width / 2 < player.getX()) {
             setDirection(Direction.RIGHT);
         } else
-        if (x + width / 2 > player.getX() + 800 / 2) {
+        if (x + width / 2 > player.getX()) {
             setDirection(Direction.LEFT);
         } else
-        if (y + height / 2 < player.getY() + 600 / 2) {
+        if (y + height / 2 < player.getY()) {
             setDirection(Direction.DOWN);
         } else
-        if (y + height / 2 > player.getY() + 600 / 2) {
+        if (y + height / 2 > player.getY()) {
             setDirection(Direction.UP);
         } else {
             setDirection(Direction.NONE);
+            idle = true;
+            return;
         }
+        setMoved(true);
+        move();
     }
 
-    public void findZombieRotation() {
+    public void findRotation() {
         if (getDirection() == Direction.UP) {
-            rotation = 270;
+            rotation = 30;
         } else if (getDirection() == Direction.DOWN) {
             rotation = 90;
         } else if (getDirection() == Direction.LEFT) {
@@ -116,7 +131,8 @@ public class Zombie extends MovableEntity {
         if (nextAttackFrame == 0) {
             ++currentAttackFrame;
             if (currentAttackFrame >= attackingFrames.length) {
-                currentIdleFrame = 0;
+                currentAttackFrame = 0;
+                attacking = false;
             }
             nextAttackFrame = ATTACK_ANIMATION_SPEED;
         }
@@ -128,6 +144,7 @@ public class Zombie extends MovableEntity {
             ++currentIdleFrame;
             if (currentIdleFrame >= idleFrames.length) {
                 currentIdleFrame = 0;
+                idle = false;
             }
             nextIdleFrame = IDLE_ANIMATION_SPEED;
         }
@@ -137,7 +154,7 @@ public class Zombie extends MovableEntity {
         movingFrames = new BufferedImage[16];
         for (int i = 0; i < movingFrames.length; i++) {
             try {
-                movingFrames[i] = scaleBufferedImage(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/Zombie/move/skeleton-move_" + i + ".png")), 128, 128);
+                movingFrames[i] = scaleBufferedImage(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/Zombie/move/skeleton-move_" + i + ".png")), 168, 168);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -148,7 +165,7 @@ public class Zombie extends MovableEntity {
         attackingFrames = new BufferedImage[8];
         for (int i = 0; i < attackingFrames.length; i++) {
             try {
-                attackingFrames[i] = scaleBufferedImage(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/Zombie/attack/skeleton-attack_" + i + ".png")), 128, 128);
+                attackingFrames[i] = scaleBufferedImage(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/Zombie/attack/skeleton-attack_" + i + ".png")), 168, 168);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

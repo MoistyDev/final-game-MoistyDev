@@ -40,8 +40,6 @@ public class Player extends ControllableEntity {
         this.mouse = mouse;
         setDimension(64, 64);
         setSpeed(4);
-        x = x + 800 / 2;
-        y = y + 600 / 2;
     }
 
     public void load() {
@@ -89,6 +87,16 @@ public class Player extends ControllableEntity {
         return health;
     }
 
+    public void tryDealingDamage() {
+        for (Zombie zombie : ZombieRepository.getInstance()) {
+            if ((mouse.getX() + x - 800 / 2) >= zombie.getX() && (mouse.getX() + x - 800 / 2) <= zombie.getX() + zombie.getWidth() && (mouse.getY() + y - 600 / 2) >= zombie.getY() && (mouse.getY() + y - 600 / 2) <= zombie.getY() + zombie.getHeight()) {
+                zombie.getDamaged(25);
+                System.out.println("dealt damage");
+            }
+        }
+
+    }
+
     public void getDamaged(int damage) {
         this.health -= damage;
     }
@@ -122,9 +130,9 @@ public class Player extends ControllableEntity {
             --nextShootingFrame;
             if (nextShootingFrame == 0) {
                 ++currentShootingFrame;
-                System.out.println(pistolAmmo);
                 if (currentShootingFrame >= shootingFrames.length) {
                     currentShootingFrame = 0;
+                    tryDealingDamage();
                     isShooting = false;
                 }
                 nextShootingFrame = SHOOTING_ANIMATION_SPEED;
