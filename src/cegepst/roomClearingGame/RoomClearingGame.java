@@ -44,7 +44,7 @@ public class RoomClearingGame extends Game {
         round = 5;
         gameEnded = false;
         createZombies();
-        Sound.THEME.play();
+        Sound.THEME.play(true);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class RoomClearingGame extends Game {
 
     private void checkGameOptions(int optionMinHeight, int optionMaxHeight, String option) {
         if (mouse.getY() <= optionMaxHeight && mouse.getY() >= optionMinHeight) {
-            if (gamePad.isFirePressed()) {
+            if (gamePad.isConfirmPressed()) {
                 if (option.equalsIgnoreCase("restart")) {
                     restart();
                 } else if (option.equalsIgnoreCase("quit")) {
@@ -128,7 +128,7 @@ public class RoomClearingGame extends Game {
         if (round == 5) {
             Sound.THEME.stop();
         } else {
-            Sound.ROUND_CHANGE.play();
+            Sound.ROUND_CHANGE.play(false);
         }
         createZombies();
     }
@@ -160,11 +160,11 @@ public class RoomClearingGame extends Game {
                 }
                 break;
             case 5 :
-                Sound.FINAL_ROUND_CHANGE.play();
+                Sound.FINAL_ROUND_CHANGE.play(false);
                 for (int i = 0; i < 30; i++) {
                     createZombie();
                 }
-                Sound.FINAL_ROUND.play();
+                Sound.FINAL_ROUND.play(true);
                 break;
         }
     }
@@ -179,16 +179,18 @@ public class RoomClearingGame extends Game {
         if (gamePad.isQuitPressed()) {
             stop();
         }
-        if (gamePad.isFirePressed() && player.getPistolAmmo() != 0) {
-            Sound.PISTOL_FIRE.play();
-            player.setIsShooting(true);
-            player.lowerPistolAmmo();
-        }
+        if (!player.isDead() && !gameEnded) {
+            if (gamePad.isFirePressed() && player.getPistolAmmo() != 0) {
+                Sound.PISTOL_FIRE.play(false);
+                player.setIsShooting(true);
+                player.lowerPistolAmmo();
+            }
 
-        if (gamePad.isReloadPressed()) {
-            Sound.PISTOL_RELOAD.play();
-            player.setIsReloading(true);
-            player.resetPistolAmmo();
+            if (gamePad.isReloadPressed()) {
+                Sound.PISTOL_RELOAD.play(false);
+                player.setIsReloading(true);
+                player.resetPistolAmmo();
+            }
         }
     }
 }

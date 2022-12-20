@@ -11,6 +11,7 @@ public class GamePad extends MovementController {
         bindKey(KeyEvent.VK_ESCAPE);
         bindKey(KeyEvent.VK_SPACE, 200);
         bindKey(KeyEvent.VK_R, 200);
+        bindKey(KeyEvent.VK_ENTER);
     }
 
     public boolean isQuitPressed() {
@@ -23,5 +24,9 @@ public class GamePad extends MovementController {
 
     public boolean isReloadPressed() {
         return isKeyPressed(KeyEvent.VK_R);
+    }
+
+    public boolean isConfirmPressed() {
+        return isKeyPressed(KeyEvent.VK_ENTER);
     }
 }

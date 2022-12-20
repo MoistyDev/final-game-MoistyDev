@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class World {
     public final int worldSizeX;
     public final int worldSizeY;
-    private final String MAP_PATH = "images/Gas Station.png";
+    private final String MAP_PATH = "images/Supermarket.png";
     private BufferedImage background;
     private BufferedImage bounds;
     private ArrayList<Boundary> boundaries;
@@ -32,8 +32,6 @@ public class World {
         setMapWalls();
         setBuildingWalls();
         setInnerBuildingWalls();
-        cells = new int[maxColSize][maxRowSize];
-        generateCells();
     }
 
     public void draw(Buffer buffer, int cameraX, int cameraY) {
@@ -48,14 +46,6 @@ public class World {
         return background.getHeight();
     }
 
-    public int[][] getCells() {
-        return cells;
-    }
-
-    public ArrayList<Boundary> getBoundaries() {
-        return boundaries;
-    }
-
     public int getRandomCoordX() {
         return ThreadLocalRandom.current().nextInt(200, (worldSizeX - 400) + 1);
     }
@@ -64,19 +54,6 @@ public class World {
         return ThreadLocalRandom.current().nextInt(200, (worldSizeY - 400) + 1);
     }
 
-    private void generateCells() {
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                for (Boundary boundary : boundaries) {
-                    if (j >= boundary.getX() && j <= boundary.getX() + boundary.getWidth() && i >= boundary.getY() && i >= boundary.getY() + boundary.getHeight()) {
-                        cells[i][j] = 1;
-                    } else {
-                        cells[i][j] = 0;
-                    }
-                }
-            }
-        }
-    }
 
     private void load() {
         try {

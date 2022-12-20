@@ -33,13 +33,16 @@ public enum Sound {
         this.audioResourceName = audioResourceName;
     }
 
-    public void play() {
+    public void play(boolean loop) {
         try {
             Clip clip = AudioSystem.getClip();
             AudioInputStream stream = AudioSystem.getAudioInputStream(
                     this.getClass().getClassLoader().getResourceAsStream("audios/" + this.audioResourceName));
             clip.open(stream);
             clip.start();
+            if (loop) {
+                clip.loop(Integer.MAX_VALUE);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

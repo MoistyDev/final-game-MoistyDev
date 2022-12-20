@@ -66,6 +66,7 @@ public class Player extends ControllableEntity {
            } else {
                drawAnimationFrame(buffer, movingFrames[currentMovingFrame]);
            }
+           System.out.println("X: " + x + " Y: " + y);
        }
     }
 
@@ -94,18 +95,12 @@ public class Player extends ControllableEntity {
         health = 100;
     }
 
-    public int getHealth() {
-        return health;
-    }
-
     public void tryDealingDamage() {
         for (Zombie zombie : ZombieRepository.getInstance()) {
-            if ((mouse.getX() + x - 800 / 2) >= zombie.getX() && (mouse.getX() + x - 800 / 2) <= zombie.getX() + zombie.getWidth() && (mouse.getY() + y - 600 / 2) >= zombie.getY() && (mouse.getY() + y - 600 / 2) <= zombie.getY() + zombie.getHeight()) {
+            if ((mouse.getX() + x - 800 / 2) >= zombie.getX() && (mouse.getX() + x - 800 / 2) <= zombie.getX() + zombie.getWidth() && (mouse.getY() + y - 600 / 2) >= zombie.getY() && (mouse.getY() + y - 600 / 2) <= zombie.getY() + zombie.getHeight() && pistolAmmo > 0) {
                 zombie.getDamaged(25);
-                System.out.println("dealt damage");
             }
         }
-
     }
 
     public void getDamaged(int damage) {
@@ -143,31 +138,31 @@ public class Player extends ControllableEntity {
             int number = ThreadLocalRandom.current().nextInt(1, 9 + 1);
             switch (number) {
                 case 1:
-                    Sound.HURT_1.play();
+                    Sound.HURT_1.play(false);
                     break;
                 case 2:
-                    Sound.HURT_2.play();
+                    Sound.HURT_2.play(false);
                     break;
                 case 3:
-                    Sound.HURT_3.play();
+                    Sound.HURT_3.play(false);
                     break;
                 case 4:
-                    Sound.HURT_4.play();
+                    Sound.HURT_4.play(false);
                     break;
                 case 5:
-                    Sound.HURT_5.play();
+                    Sound.HURT_5.play(false);
                     break;
                 case 6:
-                    Sound.HURT_6.play();
+                    Sound.HURT_6.play(false);
                     break;
                 case 7:
-                    Sound.HURT_7.play();
+                    Sound.HURT_7.play(false);
                     break;
                 case 8:
-                    Sound.HURT_8.play();
+                    Sound.HURT_8.play(false);
                     break;
                 case 9 :
-                    Sound.HURT_9.play();
+                    Sound.HURT_9.play(false);
                     break;
             }
         }
@@ -277,14 +272,6 @@ public class Player extends ControllableEntity {
         }
     }
 
-    private BufferedImage scaleBufferedImage(BufferedImage originalImage, int width, int height) {
-        Image image = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = scaledImage.createGraphics();
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-        return scaledImage;
-    }
     private BufferedImage scaleBufferedImage(BufferedImage originalImage, int rotation, int width, int height) {
         Image image = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);

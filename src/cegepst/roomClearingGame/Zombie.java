@@ -130,25 +130,25 @@ public class Zombie extends MovableEntity {
         int number = ThreadLocalRandom.current().nextInt(1, 7 + 1);
         switch (number) {
             case 1:
-                Sound.ZOMBIE_GRUNT_1.play();
+                Sound.ZOMBIE_GRUNT_1.play(false);
                 break;
             case 2:
-                Sound.ZOMBIE_GRUNT_2.play();
+                Sound.ZOMBIE_GRUNT_2.play(false);
                 break;
             case 3:
-                Sound.ZOMBIE_GRUNT_3.play();
+                Sound.ZOMBIE_GRUNT_3.play(false);
                 break;
             case 4:
-                Sound.ZOMBIE_GRUNT_4.play();
+                Sound.ZOMBIE_GRUNT_4.play(false);
                 break;
             case 5:
-                Sound.ZOMBIE_GRUNT_5.play();
+                Sound.ZOMBIE_GRUNT_5.play(false);
                 break;
             case 6:
-                Sound.ZOMBIE_YELL_3.play();
+                Sound.ZOMBIE_YELL_3.play(false);
                 break;
             case 7:
-                Sound.ZOMBIE_YELL_4.play();
+                Sound.ZOMBIE_YELL_4.play(false);
                 break;
         }
     }
