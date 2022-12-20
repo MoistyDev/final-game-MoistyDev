@@ -94,8 +94,6 @@ public class RoomClearingGame extends Game {
     }
 
     private void gameOver(Buffer buffer) {
-        Sound.THEME.stop();
-
         buffer.drawEndingScreen("GAME OVER", mouse);
         checkGameOptions(260, 315, "restart");
         checkGameOptions(365, 410, "quit");

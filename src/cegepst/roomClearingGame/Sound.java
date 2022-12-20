@@ -24,16 +24,13 @@ public enum Sound {
     ZOMBIE_GRUNT_3("zombie_grunt_3.wav"),
     ZOMBIE_GRUNT_4("zombie_grunt_4.wav"),
     ZOMBIE_GRUNT_5("zombie_grunt_5.wav"),
-    ZOMBIE_GRUNT_6("zombie_grunt_6.wav"),
-    ZOMBIE_GRUNT_7("zombie_grunt_7.wav"),
     ZOMBIE_YELL_1("zombie_yell_1.wav"),
     ZOMBIE_YELL_2("zombie_yell_2.wav"),
     ZOMBIE_YELL_3("zombie_yell_3.wav"),
     ZOMBIE_YELL_4("zombie_yell_4.wav"),
     ZOMBIE_YELL_5("zombie_yell_5.wav"),
     ZOMBIE_YELL_6("zombie_yell_6.wav"),
-    ZOMBIE_YELL_7("zombie_yell_7.wav"),
-    ZOMBIE_YELL_8("zombie_yell_8.wav");
+    ZOMBIE_YELL_7("zombie_yell_7.wav");
 
     private String audioResourceName;
 

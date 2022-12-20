@@ -120,23 +120,20 @@ public class Zombie extends MovableEntity {
 
     private void playRandomHurtSound() {
         calloutCooldown = 50;
-        int number = ThreadLocalRandom.current().nextInt(1, 15 + 1);
+        int number = ThreadLocalRandom.current().nextInt(1, 12 + 1);
         switch (number) {
             case 1 -> Sound.ZOMBIE_GRUNT_1.play(false);
             case 2 -> Sound.ZOMBIE_GRUNT_2.play(false);
             case 3 -> Sound.ZOMBIE_GRUNT_3.play(false);
             case 4 -> Sound.ZOMBIE_GRUNT_4.play(false);
             case 5 -> Sound.ZOMBIE_GRUNT_5.play(false);
-            case 6 -> Sound.ZOMBIE_GRUNT_6.play(false);
-            case 7 -> Sound.ZOMBIE_GRUNT_7.play(false);
-            case 8 -> Sound.ZOMBIE_YELL_1.play(false);
-            case 9 -> Sound.ZOMBIE_YELL_2.play(false);
-            case 10 -> Sound.ZOMBIE_YELL_3.play(false);
-            case 11 -> Sound.ZOMBIE_YELL_4.play(false);
-            case 12 -> Sound.ZOMBIE_YELL_5.play(false);
-            case 13 -> Sound.ZOMBIE_YELL_6.play(false);
-            case 14 -> Sound.ZOMBIE_YELL_7.play(false);
-            case 15 -> Sound.ZOMBIE_YELL_8.play(false);
+            case 6 -> Sound.ZOMBIE_YELL_1.play(false);
+            case 7 -> Sound.ZOMBIE_YELL_2.play(false);
+            case 8 -> Sound.ZOMBIE_YELL_3.play(false);
+            case 9 -> Sound.ZOMBIE_YELL_4.play(false);
+            case 10 -> Sound.ZOMBIE_YELL_5.play(false);
+            case 11 -> Sound.ZOMBIE_YELL_6.play(false);
+            case 12 -> Sound.ZOMBIE_YELL_7.play(false);
         }
     }
 
