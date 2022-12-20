@@ -43,7 +43,7 @@ public class RoomClearingGame extends Game {
         RenderingEngine.getInstance().getScreen().hideCursor();
         round = 1;
         gameEnded = false;
-        //createZombies();
+        createZombies();
         Sound.THEME.play(true);
     }
 
@@ -134,38 +134,38 @@ public class RoomClearingGame extends Game {
     }
 
     private boolean roundEnded() {
-        return zombies.count() == 0;
+        return false; //zombies.count() == 0;
     }
 
     private void createZombies() {
         switch (round) {
-            case 1 :
+            case 1 -> {
                 for (int i = 0; i < 10; i++) {
-                    createZombie();
+                    //createZombie();
                 }
-                break;
-            case 2 :
+            }
+            case 2 -> {
                 for (int i = 0; i < 15; i++) {
                     createZombie();
                 }
-                break;
-            case 3 :
+            }
+            case 3 -> {
                 for (int i = 0; i < 20; i++) {
                     createZombie();
                 }
-                break;
-            case 4 :
+            }
+            case 4 -> {
                 for (int i = 0; i < 25; i++) {
                     createZombie();
                 }
-                break;
-            case 5 :
+            }
+            case 5 -> {
                 Sound.FINAL_ROUND_CHANGE.play(false);
                 for (int i = 0; i < 30; i++) {
                     createZombie();
                 }
                 Sound.FINAL_ROUND.play(true);
-                break;
+            }
         }
     }
 

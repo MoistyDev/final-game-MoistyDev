@@ -31,6 +31,7 @@ public class World {
         setBuildingWalls();
         setInnerBuildingWalls();
         setShippingCrates();
+        setPalmTrees();
     }
 
     public void draw(Buffer buffer, int cameraX, int cameraY) {
@@ -75,6 +76,19 @@ public class World {
         setBoundary(-131, 1518, 211, 197);
         setBoundary(185, 1923, 211, 197);
         setBoundary(-171, 2287, 211, 197);
+    }
+
+    private void setPalmTrees() {
+        setBoundary(28, 2804, 152, 148);
+        setBoundary(512, 3244, 152, 148);
+        setBoundary(164, 4304, 152, 148);
+        setBoundary(436, 4468, 152, 148);
+        setBoundary(32, 4644, 152, 148);
+        setBoundary(2160, 4508, 152, 148);
+        setBoundary(2176, 3556, 152, 148);
+        setBoundary(1588, -32, 152, 148);
+        setBoundary(2166, -202, 152, 148);
+        setBoundary(-72, -120, 152, 148);
     }
 
     private void setInnerBuildingWalls() {
