@@ -36,7 +36,6 @@ public class Zombie extends MovableEntity {
     private boolean idle;
 
     public Zombie(World world, Player player) {
-        //CollidableRepository.getInstance().registerEntity(this);
         setDimension(128, 128);
         setSpeed(2);
         loadIdleFrames();
@@ -89,7 +88,6 @@ public class Zombie extends MovableEntity {
             if (x <= player.getX() && x + width >= player.getX() && y <= player.getY() && y + height >= player.getY()) {
                 attacking = true;
                 player.getDamaged(10);
-                System.out.println("DAMAGING PLAYER");
                 attackDelay = 50;
             }
         }

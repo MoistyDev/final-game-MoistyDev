@@ -16,9 +16,7 @@ public class World {
     public final int worldSizeY;
     private final String MAP_PATH = "images/Supermarket.png";
     private BufferedImage background;
-    private BufferedImage bounds;
     private ArrayList<Boundary> boundaries;
-    private int[][] cells;
     public int maxColSize;
     public int maxRowSize;
 
@@ -32,10 +30,15 @@ public class World {
         setMapWalls();
         setBuildingWalls();
         setInnerBuildingWalls();
+        setShippingCrates();
     }
 
     public void draw(Buffer buffer, int cameraX, int cameraY) {
         buffer.drawImage(background, cameraX, cameraY);
+    }
+
+    public ArrayList<Boundary> getBoundaries() {
+        return boundaries;
     }
 
     public int getWidth() {
@@ -61,6 +64,17 @@ public class World {
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
+    }
+
+    private void setShippingCrates() {
+        setBoundary(-348, 326, 422, 197);
+        setBoundary(-344, 523, 211, 197);
+        setBoundary(416, 528, 211, 197);
+        setBoundary(416, 725, 211, 197);
+        setBoundary(-348, 1321, 633, 197);
+        setBoundary(-131, 1518, 211, 197);
+        setBoundary(185, 1923, 211, 197);
+        setBoundary(-171, 2287, 211, 197);
     }
 
     private void setInnerBuildingWalls() {

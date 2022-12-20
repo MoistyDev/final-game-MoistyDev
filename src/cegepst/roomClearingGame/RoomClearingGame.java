@@ -41,9 +41,9 @@ public class RoomClearingGame extends Game {
         camera.updateCameraPosition(player.getX(), player.getY());
         //RenderingEngine.getInstance().getScreen().fullScreen();
         RenderingEngine.getInstance().getScreen().hideCursor();
-        round = 5;
+        round = 1;
         gameEnded = false;
-        createZombies();
+        //createZombies();
         Sound.THEME.play(true);
     }
 
@@ -74,12 +74,12 @@ public class RoomClearingGame extends Game {
             player.draw(buffer);
         }
         camera.updateCameraPosition(player.getX(), player.getY());
-        buffer.translate(-player.getX() + 800 / 2, -player.getY() + 600 / 2);
+        buffer.translate(-player.getX()/* + 800 / 2*/, -player.getY() /*+ 600 / 2*/);
         for (Zombie zombie : zombies) {
             zombie.draw(buffer);
             //System.out.println("ZOMBIE : X - " + (zombie.getX() - 400) + " Y - " + (zombie.getY() - 300));
         }
-        buffer.translate(player.getX() - 800 / 2, player.getY() - 600 / 2);
+        buffer.translate(player.getX()/* - 800 / 2*/, player.getY()/* - 600 / 2*/);
         if (player.isDead()) {
             buffer.drawEndingScreen("GAME OVER", mouse);
             checkGameOptions(260, 315, "restart");
@@ -91,7 +91,7 @@ public class RoomClearingGame extends Game {
             checkGameOptions(365, 410, "quit");
         }
         mouse.drawCursor(buffer);
-        //System.out.println("CURSOR : X - " + (player.getX() - 800 / 2) + " Y - " + (player.getY() - 600 / 2));
+        //System.out.println("CURSOR : X - " + (mouse.getX()) + " Y - " + (mouse.getY()));
 
     }
 
@@ -171,7 +171,16 @@ public class RoomClearingGame extends Game {
 
     private void createZombie() {
         Zombie zombie = new Zombie(world, player);
-        zombie.teleport(world.getRandomCoordX(), world.getRandomCoordY());
+        int randomX = world.getRandomCoordX();
+        int randomY = world.getRandomCoordY();
+        for (Boundary boundary : world.getBoundaries()) {
+            if (randomX <= boundary.getX() && randomX >= boundary.getX() + boundary.getWidth() && randomY <= boundary.getY() && randomY >= boundary.getY() + boundary.getHeight()) {
+                do {
+                    randomX = world.getRandomCoordX();
+                    randomY = world.getRandomCoordY();
+                } while (randomX <= boundary.getX() && randomX >= boundary.getX() + boundary.getWidth() && randomY <= boundary.getY() && randomY >= boundary.getY() + boundary.getHeight());
+            }
+        }
         zombies.registerZombie(zombie);
     }
 
