@@ -257,7 +257,7 @@ public class World {
 
     private void setLeftRedWalls() {
         setBoundary(657, 310, 16, 1250);
-        setBoundary(657, 1710, 16, 1520)
+        setBoundary(657, 1710, 16, 1520);
     }
 
     private void setTopRedWalls() {

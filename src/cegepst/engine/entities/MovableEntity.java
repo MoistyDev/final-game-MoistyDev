@@ -45,22 +45,6 @@ public abstract class MovableEntity extends StaticEntity {
         move();
     }
 
-    public void moveUp() {
-        move(Direction.UP);
-    }
-
-    public void moveDown() {
-        move(Direction.DOWN);
-    }
-
-    public void moveLeft() {
-        move(Direction.LEFT);
-    }
-
-    public void moveRight() {
-        move(Direction.RIGHT);
-    }
-
     public Rectangle getHitBox() {
         switch (direction) {
             case UP: return getUpperHitBox();

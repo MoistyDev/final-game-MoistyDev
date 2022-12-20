@@ -18,23 +18,9 @@ public class Buffer {
         graphics.fillRect(x, y, width, height);
     }
 
-    public void drawCircle(int x, int y, int radius, Paint paint) {
-        graphics.setPaint(paint);
-        graphics.fillOval(x, y, radius * 2, radius * 2);
-    }
-
     public void drawString(String text, int x, int y, Paint paint) {
         graphics.setPaint(paint);
         graphics.drawString(text, x, y);
-    }
-
-    public BufferedImage scaleBufferedImage(BufferedImage originalImage, int width, int height) {
-        Image image = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        BufferedImage scaledImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = scaledImage.createGraphics();
-        g.drawImage(image, 0, 0, null);
-        g.dispose();
-        return scaledImage;
     }
 
     public void drawEndingScreen(String title, Mouse mouse) {
@@ -74,22 +60,6 @@ public class Buffer {
             textColor = Color.WHITE;
         }
         this.drawString(text, width / 10, height - 200, textColor);
-    }
-
-    public void drawLoadingScreen() {
-        int width = RenderingEngine.getInstance().getPanel().getWidth();
-        int height = RenderingEngine.getInstance().getPanel().getHeight();
-        this.drawRectangle(0, 0, width, height, new Color(0, 0, 0, 150));
-        graphics.setFont(graphics.getFont().deriveFont(Font.BOLD, 110f));
-        String text = "LOADING.";
-        this.drawString(text, width / 10, height / 8, Color.black);
-        this.drawString(text, width / 10 - 4, height / 8 - 4, Color.WHITE);
-        text = "LOADING..";
-        this.drawString(text, width / 10, height / 8, Color.black);
-        this.drawString(text, width / 10 - 4, height / 8 - 4, Color.WHITE);
-        text = "LOADING...";
-        this.drawString(text, width / 10, height / 8, Color.black);
-        this.drawString(text, width / 10 - 4, height / 8 - 4, Color.WHITE);
     }
 
     public void drawImage(Image image, int x, int y) {

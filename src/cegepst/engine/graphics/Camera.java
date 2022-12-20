@@ -1,7 +1,5 @@
 package cegepst.engine.graphics;
 
-import java.awt.*;
-
 public class Camera {
     private int viewportSizeX = 0;
     private int viewportSizeY = 0;
