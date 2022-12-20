@@ -31,12 +31,11 @@ public class Buffer {
         int quitMinHeight = 365;
         int quitMaxHeight = 410;
         this.drawRectangle(0, 0, width, height, new Color(0, 0, 0, 150));
-        graphics.setFont(graphics.getFont().deriveFont(Font.BOLD, 110f));
+        this.setFontSize(Font.BOLD, 110f);
         String text = title;
-        this.drawString(text, width / 10, height / 4, Color.black);
-        this.drawString(text, width / 10 - 4, height / 4 - 4, Color.WHITE);
-        graphics.setFont(graphics.getFont().deriveFont(50f));
-
+        this.drawString(text, width / 12, height / 4, Color.black);
+        this.drawString(text, width / 12 - 4, height / 4 - 4, Color.WHITE);
+        this.setFontSize(50f);
         text = "Restart";
         Color textColor;
         if (mouse.getY() <= retryMaxHeight && mouse.getY() >= retryMinHeight) {
@@ -66,8 +65,12 @@ public class Buffer {
         graphics.drawImage(image, x, y, null);
     }
 
-    public Graphics2D getGraphics() {
-        return this.graphics;
+    public void setFontSize(float fontSize) {
+        graphics.setFont(graphics.getFont().deriveFont(fontSize));
+    }
+
+    public void setFontSize(int type, float fontSize) {
+        graphics.setFont(graphics.getFont().deriveFont(type, fontSize));
     }
 
     public void translate(int x, int y) {

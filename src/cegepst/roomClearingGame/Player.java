@@ -74,7 +74,9 @@ public class Player extends ControllableEntity {
         if (calloutCooldown != 0) {
             calloutCooldown--;
         }
-        moveWithController();
+        if (!isDead()) {
+            moveWithController();
+        }
         if (hasMoved()) {
             cycleMovingFrames();
         } else {
@@ -104,6 +106,13 @@ public class Player extends ControllableEntity {
     public void getDamaged(int damage) {
         playRandomHurtSound();
         this.health -= damage;
+        if (health < 0) {
+            health = 0;
+        }
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     public boolean isDead() {
@@ -135,33 +144,15 @@ public class Player extends ControllableEntity {
             calloutCooldown = 50;
             int number = ThreadLocalRandom.current().nextInt(1, 9 + 1);
             switch (number) {
-                case 1:
-                    Sound.HURT_1.play(false);
-                    break;
-                case 2:
-                    Sound.HURT_2.play(false);
-                    break;
-                case 3:
-                    Sound.HURT_3.play(false);
-                    break;
-                case 4:
-                    Sound.HURT_4.play(false);
-                    break;
-                case 5:
-                    Sound.HURT_5.play(false);
-                    break;
-                case 6:
-                    Sound.HURT_6.play(false);
-                    break;
-                case 7:
-                    Sound.HURT_7.play(false);
-                    break;
-                case 8:
-                    Sound.HURT_8.play(false);
-                    break;
-                case 9 :
-                    Sound.HURT_9.play(false);
-                    break;
+                case 1 -> Sound.HURT_1.play(false);
+                case 2 -> Sound.HURT_2.play(false);
+                case 3 -> Sound.HURT_3.play(false);
+                case 4 -> Sound.HURT_4.play(false);
+                case 5 -> Sound.HURT_5.play(false);
+                case 6 -> Sound.HURT_6.play(false);
+                case 7 -> Sound.HURT_7.play(false);
+                case 8 -> Sound.HURT_8.play(false);
+                case 9 -> Sound.HURT_9.play(false);
             }
         }
     }

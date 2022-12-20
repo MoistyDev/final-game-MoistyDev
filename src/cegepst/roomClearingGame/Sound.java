@@ -10,7 +10,6 @@ public enum Sound {
     FINAL_ROUND_CHANGE("final_round_change.wav"),
     THEME("theme.wav"),
     FINAL_ROUND("final_round.wav"),
-    GAME_OVER("game_over.wav"),
     HURT_1("hurt_1.wav"),
     HURT_2("hurt_2.wav"),
     HURT_3("hurt_3.wav"),
@@ -50,7 +49,7 @@ public enum Sound {
             clip.open(stream);
             clip.start();
             if (loop) {
-                clip.loop(Integer.MAX_VALUE);
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
             }
         } catch (Exception e) {
             e.printStackTrace();

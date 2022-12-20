@@ -27,18 +27,16 @@ public class Zombie extends MovableEntity {
     private int attackDelay = 0;
     private int calloutCooldown = 0;
     private int health = 100;
-    private World world;
     private Player player;
     private boolean attacking;
     private boolean idle;
 
-    public Zombie(World world, Player player) {
+    public Zombie(Player player) {
         setDimension(128, 128);
         setSpeed(2);
         loadIdleFrames();
         loadMovingFrames();
         loadAttackingFrames();
-        this.world = world;
         this.player = player;
     }
 
@@ -221,7 +219,6 @@ public class Zombie extends MovableEntity {
 
     private void drawAnimationFrame(Buffer buffer, BufferedImage image, double rotation) {
         buffer.drawImage(buffer.rotateImage(image, rotation), x, y);
-        //System.out.println("x :" + x + " y : " + y);
     }
 
     private double findSpriteRotationAngle() {

@@ -14,8 +14,10 @@ public class RoomClearingGame extends Game {
     private ZombieRepository zombies;
     private World world;
     private Camera camera;
+    private Hud hud;
     private int round;
     private boolean gameEnded;
+    private int replayCounter = 0;
 
     @Override
     protected void initialize() {
@@ -36,6 +38,9 @@ public class RoomClearingGame extends Game {
         if (camera == null) {
             camera = new Camera(800, 600);
         }
+        if (hud == null) {
+            hud = new Hud();
+        }
         startGame();
     }
 
@@ -54,6 +59,7 @@ public class RoomClearingGame extends Game {
     protected void restart() {
         ZombieRepository.killInstance();
         player.resetPlayer();
+        replayCounter++;
         initialize();
     }
 
@@ -76,6 +82,9 @@ public class RoomClearingGame extends Game {
             wonGame(buffer);
         }
         mouse.drawCursor(buffer);
+        if (!player.isDead() && !gameEnded) {
+            hud.draw(buffer, player.getPistolAmmo(), player.getHealth());
+        }
     }
 
     private void hasPlayerWonGame() {
@@ -85,10 +94,11 @@ public class RoomClearingGame extends Game {
     }
 
     private void gameOver(Buffer buffer) {
+        Sound.THEME.stop();
+
         buffer.drawEndingScreen("GAME OVER", mouse);
         checkGameOptions(260, 315, "restart");
         checkGameOptions(365, 410, "quit");
-        Sound.GAME_OVER.play(false);
     }
 
     private void wonGame(Buffer buffer) {
@@ -106,7 +116,9 @@ public class RoomClearingGame extends Game {
         round = 1;
         gameEnded = false;
         createZombies();
-        Sound.THEME.play(true);
+        if (replayCounter == 0) {
+            Sound.THEME.play(false);
+        }
     }
 
     private void checkGameOptions(int optionMinHeight, int optionMaxHeight, String option) {
@@ -184,7 +196,7 @@ public class RoomClearingGame extends Game {
     }
 
     private void createZombie() {
-        Zombie zombie = new Zombie(world, player);
+        Zombie zombie = new Zombie(player);
         int randomX = world.getRandomCoordX();
         int randomY = world.getRandomCoordY();
         for (Boundary boundary : world.getBoundaries()) {
