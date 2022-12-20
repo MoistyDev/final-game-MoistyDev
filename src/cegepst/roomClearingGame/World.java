@@ -32,6 +32,9 @@ public class World {
         setInnerBuildingWalls();
         setShippingCrates();
         setPalmTrees();
+        setBathroomFurniture();
+        setBistroFurniture();
+        setShoppingArea();
     }
 
     public void draw(Buffer buffer, int cameraX, int cameraY) {
@@ -67,6 +70,22 @@ public class World {
         }
     }
 
+    private void setShoppingArea() {
+        setBoundary(876, 2457, 80, 558);
+        setBoundary(1168, 2457, 86, 555);
+        setBoundary(1440, 2760, 206, 85);
+        setBoundary(1440, 2450, 206, 85);
+        setBoundary(1902, 2252, 29, 188);
+        setBoundary(1892, 2440, 90, 204);
+        setBoundary(1892, 2824, 90, 204);
+        setBoundary(1902, 3028, 29, 187);
+        setBoundary(1446, 3316, 146, 104);
+        setBoundary(1582, 3316, 146, 104);
+        setBoundary(1582, 3316, 146, 104);
+        setBoundary(1298, 2072, 90, 138);
+        setBoundary(1298, 2072, 187, 64);
+    }
+
     private void setShippingCrates() {
         setBoundary(-348, 326, 422, 197);
         setBoundary(-344, 523, 211, 197);
@@ -91,12 +110,44 @@ public class World {
         setBoundary(-72, -120, 152, 148);
     }
 
+    private void setBistroFurniture() {
+        setBoundary(673, 998, 533, 34);
+        setBoundary(673, 1360, 620, 81);
+        setBoundary(782, 492, 80, 65);
+        setBoundary(950, 525, 80, 65);
+        setBoundary(862, 486, 102, 274);
+        setBoundary(1716, 580, 80, 65);
+        setBoundary(1796, 508, 135, 172);
+        setBoundary(1796, 888, 145, 172);
+        setBoundary(1796, 888, 145, 172);
+        setBoundary(1724, 976, 80, 65);
+        setBoundary(1931, 904, 80, 65);
+        setBoundary(2155, 326, 87, 912);
+        setBoundary(1727, 1276, 110, 110);
+        setBoundary(1727, 1548, 110, 110);
+        setBoundary(2159, 1958, 110, 270);
+        setBoundary(2034, 2132, 206, 120);
+        setBoundary(2166, 1820, 141, 76);
+        setBoundary(1959, 1358, 189, 115);
+    }
+
+    private void setBathroomFurniture() {
+        setBoundary(673, 1560, 155, 16);
+        setBoundary(673, 1708, 155, 16);
+        setBoundary(673, 1756, 72, 234);
+        setBoundary(673, 2000, 72, 234);
+        setBoundary(1113, 1885, 85, 105);
+        setBoundary(1189, 1758, 32, 32);
+        setBoundary(1190, 2008, 75, 80);
+        setBoundary(1126, 2180, 32, 32);
+    }
+
     private void setInnerBuildingWalls() {
         //lower restroom
         setBoundary(656, 2244, 195, 8);
         setBoundary(1040, 2244, 255, 8);
         //upper restroom
-        setBoundary(656,1440, 689, 8);
+        setBoundary(656,1440, 640, 8);
         //right restroom
         setBoundary(1290, 1240, 8, 290);
         setBoundary(1290, 1710, 8, 540);

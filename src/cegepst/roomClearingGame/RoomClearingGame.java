@@ -74,12 +74,12 @@ public class RoomClearingGame extends Game {
             player.draw(buffer);
         }
         camera.updateCameraPosition(player.getX(), player.getY());
-        buffer.translate(-player.getX()/* + 800 / 2*/, -player.getY() /*+ 600 / 2*/);
+        buffer.translate(-player.getX() + 800 / 2, -player.getY() + 600 / 2);
         for (Zombie zombie : zombies) {
             zombie.draw(buffer);
             //System.out.println("ZOMBIE : X - " + (zombie.getX() - 400) + " Y - " + (zombie.getY() - 300));
         }
-        buffer.translate(player.getX()/* - 800 / 2*/, player.getY()/* - 600 / 2*/);
+        buffer.translate(player.getX() - 800 / 2, player.getY() - 600 / 2);
         if (player.isDead()) {
             buffer.drawEndingScreen("GAME OVER", mouse);
             checkGameOptions(260, 315, "restart");
@@ -91,7 +91,7 @@ public class RoomClearingGame extends Game {
             checkGameOptions(365, 410, "quit");
         }
         mouse.drawCursor(buffer);
-        //System.out.println("CURSOR : X - " + (mouse.getX()) + " Y - " + (mouse.getY()));
+        //System.out.println("CURSOR : X - " + (player.getX() - 800 / 2) + " Y - " + (player.getY() - 600 / 2));
 
     }
 
@@ -134,38 +134,38 @@ public class RoomClearingGame extends Game {
     }
 
     private boolean roundEnded() {
-        return false; //zombies.count() == 0;
+        return zombies.count() == 0;
     }
 
     private void createZombies() {
         switch (round) {
-            case 1 -> {
+            case 1 :
                 for (int i = 0; i < 10; i++) {
-                    //createZombie();
+                    createZombie();
                 }
-            }
-            case 2 -> {
+                break;
+            case 2 :
                 for (int i = 0; i < 15; i++) {
                     createZombie();
                 }
-            }
-            case 3 -> {
+                break;
+            case 3 :
                 for (int i = 0; i < 20; i++) {
                     createZombie();
                 }
-            }
-            case 4 -> {
+                break;
+            case 4 :
                 for (int i = 0; i < 25; i++) {
                     createZombie();
                 }
-            }
-            case 5 -> {
+                break;
+            case 5 :
                 Sound.FINAL_ROUND_CHANGE.play(false);
                 for (int i = 0; i < 30; i++) {
                     createZombie();
                 }
                 Sound.FINAL_ROUND.play(true);
-            }
+                break;
         }
     }
 
@@ -181,6 +181,7 @@ public class RoomClearingGame extends Game {
                 } while (randomX <= boundary.getX() && randomX >= boundary.getX() + boundary.getWidth() && randomY <= boundary.getY() && randomY >= boundary.getY() + boundary.getHeight());
             }
         }
+        zombie.teleport(randomX, randomY);
         zombies.registerZombie(zombie);
     }
 
