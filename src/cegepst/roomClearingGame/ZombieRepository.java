@@ -1,9 +1,6 @@
 package cegepst.roomClearingGame;
 
-import cegepst.engine.entities.CollidableRepository;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,16 +24,8 @@ public class ZombieRepository implements Iterable<Zombie> {
         registeredZombies.add(zombie);
     }
 
-    public void registerEntities(Collection<Zombie> zombies) {
-        registeredZombies.addAll(zombies);
-    }
-
     public void unregisterEntity(Zombie zombie) {
         registeredZombies.remove(zombie);
-    }
-
-    public void unregisterEntities(Collection<Zombie> zombie) {
-        registeredZombies.removeAll(zombie);
     }
 
     public int count() {

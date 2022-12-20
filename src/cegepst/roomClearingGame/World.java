@@ -3,12 +3,9 @@ package cegepst.roomClearingGame;
 import cegepst.engine.graphics.Buffer;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class World {
@@ -30,11 +27,7 @@ public class World {
         setMapWalls();
         setBuildingWalls();
         setInnerBuildingWalls();
-        setShippingCrates();
-        setPalmTrees();
-        setBathroomFurniture();
-        setBistroFurniture();
-        setShoppingArea();
+        setFurniture();
     }
 
     public void draw(Buffer buffer, int cameraX, int cameraY) {
@@ -45,14 +38,6 @@ public class World {
         return boundaries;
     }
 
-    public int getWidth() {
-        return background.getWidth();
-    }
-
-    public int getHeight() {
-        return background.getHeight();
-    }
-
     public int getRandomCoordX() {
         return ThreadLocalRandom.current().nextInt(200, (worldSizeX - 400) + 1);
     }
@@ -61,13 +46,20 @@ public class World {
         return ThreadLocalRandom.current().nextInt(200, (worldSizeY - 400) + 1);
     }
 
-
     private void load() {
         try {
             background = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(MAP_PATH));
         } catch (IOException exception) {
             System.out.println(exception.getMessage());
         }
+    }
+
+    private void setFurniture() {
+        setShippingCrates();
+        setPalmTrees();
+        setBathroomFurniture();
+        setBistroFurniture();
+        setShoppingArea();
     }
 
     private void setShoppingArea() {
@@ -143,75 +135,140 @@ public class World {
     }
 
     private void setInnerBuildingWalls() {
-        //lower restroom
-        setBoundary(656, 2244, 195, 8);
-        setBoundary(1040, 2244, 255, 8);
-        //upper restroom
-        setBoundary(656,1440, 640, 8);
-        //right restroom
-        setBoundary(1290, 1240, 8, 290);
-        setBoundary(1290, 1710, 8, 540);
-        //top stall
-        setBoundary(1110, 1750, 180, 8);
-        //middle stall
-        setBoundary(1110, 2000, 180, 8);
-        //left walls
+        setRestroom();
+        setLeftWalls();
+        setOffice();
+    }
+
+    private void setLeftWalls() {
         setBoundary(1110, 1750, 8, 50);
         setBoundary(1110, 1985, 8, 45);
         setBoundary(1110, 2205, 8, 30);
+    }
 
-        //top freezer
-        setBoundary(1865, 1228, 416, 8);
-        //left freezer
+    private void setRestroom() {
+        setLowerRestroom();
+        setUpperRestroom();
+        setRightRestroom();
+        setStalls();
+    }
+
+    private void setStalls() {
+        setBoundary(1110, 1750, 180, 8);
+        setBoundary(1110, 2000, 180, 8);
+    }
+
+    private void setRightRestroom() {
+        setBoundary(1290, 1240, 8, 290);
+        setBoundary(1290, 1710, 8, 540);
+    }
+
+    private void setUpperRestroom() {
+        setBoundary(656,1440, 640, 8);
+    }
+
+    private void setLowerRestroom() {
+        setBoundary(656, 2244, 195, 8);
+        setBoundary(1040, 2244, 255, 8);
+    }
+
+    private void setOffice() {
+        setTopOffice();
+        setLeftOffice();
+    }
+
+    private void setLeftOffice() {
         setBoundary(1865, 1228, 8, 756);
         setBoundary(1865, 2150, 8, 100);
-        //bottom freezer
         setBoundary(1865, 2244, 365, 8);
-        //middle wall
         setBoundary(1290,1762, 236, 8);
         setBoundary(1665,1762, 236, 8);
     }
 
+    private void setTopOffice() {
+        setBoundary(1865, 1228, 416, 8);
+    }
+
     private void setBuildingWalls() {
-        //top red walls
-        setBoundary(636, 310, 736, 16);
-        setBoundary(1585, 310, 736, 16);
-        //left red walls
-        setBoundary(657, 310, 16, 1250);
-        setBoundary(657, 1710, 16, 1520);
-        //right red wall
-        setBoundary(2270, 310, 16, 2912);
-        //bottom left walls
-        setBoundary(657, 3220, 300, 16);
-        setBoundary(945, 3220, 16, 176);
-        setBoundary(945, 3380, 260, 16);
-        //bottom right walls
-        setBoundary(1744, 3220, 540, 16);
-        setBoundary(1744, 3220, 16, 176);
-        setBoundary(1470, 3380, 290, 16);
-        //top shipping wall
-        setBoundary(-380, 310, 1016, 16);
-        //left shipping wall
-        setBoundary(-380, 310, 32, 4304);
-        //bottom empty building
-        setBoundary(-380, 4590, 376, 32);
-        //right empty building
-        setBoundary(-40, 2720, 32, 1920);
-        //top empty building
-        setBoundary(-380, 2730, 340, 32);
-        //bottom shipping walls
+        setOuterMainBuilding();
+        setOuterShippingArea();
+        setEmptyBuilding();
+    }
+
+    private void setEmptyBuilding() {
+        setBottomEmptyBuilding();
+        setRightEmptyBuilding();
+        setTopEmptyBuilding();
+    }
+    private void setOuterMainBuilding() {
+        setTopRedWalls();
+        setLeftRedWalls();
+        setRightRedWall();
+        setBottomLeftWalls();
+        setBottomRightWalls();
+    }
+
+    private void setOuterShippingArea() {
+        setTopShippingWall();
+        setBottomShippingWalls();
+        setLeftShippingWall();
+    }
+
+    private void setBottomShippingWalls() {
         setBoundary(-40, 2720, 270, 8);
         setBoundary(455, 2720, 200, 8);
     }
 
+    private void setTopEmptyBuilding() {
+        setBoundary(-380, 2730, 340, 32);
+    }
+
+    private void setRightEmptyBuilding() {
+        setBoundary(-40, 2720, 32, 1920);
+    }
+
+    private void setBottomEmptyBuilding() {
+        setBoundary(-380, 4590, 376, 32);
+    }
+
+    private void setLeftShippingWall() {
+        setBoundary(-380, 310, 32, 4304);
+    }
+
+    private void setTopShippingWall() {
+        setBoundary(-380, 310, 1016, 16);
+    }
+
+    private void setBottomRightWalls() {
+        setBoundary(1744, 3220, 540, 16);
+        setBoundary(1744, 3220, 16, 176);
+        setBoundary(1470, 3380, 290, 16);
+    }
+
+    private void setBottomLeftWalls() {
+        setBoundary(657, 3220, 300, 16);
+        setBoundary(945, 3220, 16, 176);
+        setBoundary(945, 3380, 260, 16);
+    }
+
+    private void setRightRedWall() {
+        setBoundary(2270, 310, 16, 2912);
+    }
+
+    private void setLeftRedWalls() {
+        setBoundary(657, 310, 16, 1250);
+        setBoundary(657, 1710, 16, 1520)
+    }
+
+    private void setTopRedWalls() {
+        setBoundary(636, 310, 736, 16);
+        setBoundary(1585, 310, 736, 16);
+    }
+
     private void setMapWalls() {
-        //top
         setBoundary(-400, -300, background.getWidth(), 20);
-        //bottom
         setBoundary(-400, 4820, background.getWidth(), 10);
-        //left
         setBoundary(-400, -300, 20, background.getHeight());
-        //right
         setBoundary(2420, -300, 20, background.getHeight());
     }
 

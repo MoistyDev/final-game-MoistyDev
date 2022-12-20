@@ -3,7 +3,6 @@ package cegepst.roomClearingGame;
 import cegepst.engine.controls.MovementController;
 
 import java.awt.event.KeyEvent;
-import java.security.Key;
 
 public class GamePad extends MovementController {
 

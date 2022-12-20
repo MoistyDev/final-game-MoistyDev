@@ -5,7 +5,6 @@ import cegepst.engine.graphics.RenderingEngine;
 
 import javax.imageio.ImageIO;
 import javax.swing.event.MouseInputListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
@@ -28,7 +27,6 @@ public class Mouse implements MouseMotionListener, MouseInputListener {
         bindClick(MouseEvent.MOUSE_CLICKED);
     }
 
-
     public void load() {
         loadSpriteSheet();
     }
@@ -39,10 +37,6 @@ public class Mouse implements MouseMotionListener, MouseInputListener {
 
     public int getY() {
         return y;
-    }
-
-    public boolean isFireClicked() {
-        return clickedInputs.containsKey(MouseEvent.MOUSE_CLICKED) && clickedInputs.get(MouseEvent.MOUSE_CLICKED);
     }
 
     @Override

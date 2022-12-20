@@ -14,11 +14,10 @@ public class Player extends ControllableEntity {
     private static final int MOVING_ANIMATION_SPEED = 3;
     private static final int IDLE_ANIMATION_SPEED = 7;
     private static final int SHOOTING_ANIMATION_SPEED = 2;
-    private static final int RELOADING_ANIMATION_SPEED = 5;
-
+    private static final int RELOADING_ANIMATION_SPEED = 3;
     private Mouse mouse;
-    private int viewportX = 800 / 2;
-    private int viewportY = 600 / 2;
+    private final int viewportX = 800 / 2;
+    private final int viewportY = 600 / 2;
     private boolean isShooting = false;
     private boolean isReloading = false;
     private int pistolAmmo = 17;
@@ -66,7 +65,6 @@ public class Player extends ControllableEntity {
            } else {
                drawAnimationFrame(buffer, movingFrames[currentMovingFrame]);
            }
-           System.out.println("X: " + x + " Y: " + y);
        }
     }
 
@@ -97,7 +95,7 @@ public class Player extends ControllableEntity {
 
     public void tryDealingDamage() {
         for (Zombie zombie : ZombieRepository.getInstance()) {
-            if ((mouse.getX() + x - 800 / 2) >= zombie.getX() && (mouse.getX() + x - 800 / 2) <= zombie.getX() + zombie.getWidth() && (mouse.getY() + y - 600 / 2) >= zombie.getY() && (mouse.getY() + y - 600 / 2) <= zombie.getY() + zombie.getHeight() && pistolAmmo > 0) {
+            if ((mouse.getX() + x - viewportX) >= zombie.getX() && (mouse.getX() + x - viewportX) <= zombie.getX() + zombie.getWidth() && (mouse.getY() + y - viewportY) >= zombie.getY() && (mouse.getY() + y - viewportY) <= zombie.getY() + zombie.getHeight() && pistolAmmo > 0) {
                 zombie.getDamaged(25);
             }
         }
@@ -134,7 +132,7 @@ public class Player extends ControllableEntity {
 
     private void playRandomHurtSound() {
         if (calloutCooldown == 0 && !isDead()) {
-            calloutCooldown = 80;
+            calloutCooldown = 50;
             int number = ThreadLocalRandom.current().nextInt(1, 9 + 1);
             switch (number) {
                 case 1:
@@ -281,7 +279,6 @@ public class Player extends ControllableEntity {
         g.dispose();
         return scaledImage;
     }
-
 
     private double findSpriteRotationAngle() {
         int deltaX = (viewportX) - mouse.getX();

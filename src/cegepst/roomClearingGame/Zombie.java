@@ -1,7 +1,6 @@
 package cegepst.roomClearingGame;
 
 import cegepst.engine.controls.Direction;
-import cegepst.engine.entities.CollidableRepository;
 import cegepst.engine.entities.MovableEntity;
 import cegepst.engine.graphics.Buffer;
 
@@ -9,14 +8,12 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Vector;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Zombie extends MovableEntity {
     private static final int MOVING_ANIMATION_SPEED = 3;
     private static final int ATTACK_ANIMATION_SPEED = 5;
     private static final int IDLE_ANIMATION_SPEED = 7;
-
     private BufferedImage[] movingFrames;
     private BufferedImage[] attackingFrames;
     private BufferedImage[] idleFrames;
@@ -29,14 +26,13 @@ public class Zombie extends MovableEntity {
     private int rotation = 90;
     private int attackDelay = 0;
     private int calloutCooldown = 0;
+    private int health = 100;
     private World world;
     private Player player;
-    private int health = 100;
     private boolean attacking;
     private boolean idle;
 
     public Zombie(World world, Player player) {
-        //CollidableRepository.getInstance().registerEntity(this);
         setDimension(128, 128);
         setSpeed(2);
         loadIdleFrames();
@@ -89,7 +85,6 @@ public class Zombie extends MovableEntity {
             if (x <= player.getX() && x + width >= player.getX() && y <= player.getY() && y + height >= player.getY()) {
                 attacking = true;
                 player.getDamaged(10);
-                System.out.println("DAMAGING PLAYER");
                 attackDelay = 50;
             }
         }
@@ -127,29 +122,23 @@ public class Zombie extends MovableEntity {
 
     private void playRandomHurtSound() {
         calloutCooldown = 50;
-        int number = ThreadLocalRandom.current().nextInt(1, 7 + 1);
+        int number = ThreadLocalRandom.current().nextInt(1, 15 + 1);
         switch (number) {
-            case 1:
-                Sound.ZOMBIE_GRUNT_1.play(false);
-                break;
-            case 2:
-                Sound.ZOMBIE_GRUNT_2.play(false);
-                break;
-            case 3:
-                Sound.ZOMBIE_GRUNT_3.play(false);
-                break;
-            case 4:
-                Sound.ZOMBIE_GRUNT_4.play(false);
-                break;
-            case 5:
-                Sound.ZOMBIE_GRUNT_5.play(false);
-                break;
-            case 6:
-                Sound.ZOMBIE_YELL_3.play(false);
-                break;
-            case 7:
-                Sound.ZOMBIE_YELL_4.play(false);
-                break;
+            case 1 -> Sound.ZOMBIE_GRUNT_1.play(false);
+            case 2 -> Sound.ZOMBIE_GRUNT_2.play(false);
+            case 3 -> Sound.ZOMBIE_GRUNT_3.play(false);
+            case 4 -> Sound.ZOMBIE_GRUNT_4.play(false);
+            case 5 -> Sound.ZOMBIE_GRUNT_5.play(false);
+            case 6 -> Sound.ZOMBIE_GRUNT_6.play(false);
+            case 7 -> Sound.ZOMBIE_GRUNT_7.play(false);
+            case 8 -> Sound.ZOMBIE_YELL_1.play(false);
+            case 9 -> Sound.ZOMBIE_YELL_2.play(false);
+            case 10 -> Sound.ZOMBIE_YELL_3.play(false);
+            case 11 -> Sound.ZOMBIE_YELL_4.play(false);
+            case 12 -> Sound.ZOMBIE_YELL_5.play(false);
+            case 13 -> Sound.ZOMBIE_YELL_6.play(false);
+            case 14 -> Sound.ZOMBIE_YELL_7.play(false);
+            case 15 -> Sound.ZOMBIE_YELL_8.play(false);
         }
     }
 

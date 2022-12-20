@@ -36,22 +36,12 @@ public class RoomClearingGame extends Game {
         if (camera == null) {
             camera = new Camera(800, 600);
         }
-        zombies = ZombieRepository.getInstance();
-        player.teleport(1000, 600);
-        camera.updateCameraPosition(player.getX(), player.getY());
-        //RenderingEngine.getInstance().getScreen().fullScreen();
-        RenderingEngine.getInstance().getScreen().hideCursor();
-        round = 1;
-        gameEnded = false;
-        createZombies();
-        Sound.THEME.play(true);
+        startGame();
     }
 
     @Override
     protected void update() {
-        if (zombies.count() == 0 && round == 5) {
-            gameEnded = true;
-        }
+        hasPlayerWonGame();
         updateInputs();
         updatePlayerActions();
         updateZombieActions();
@@ -77,22 +67,46 @@ public class RoomClearingGame extends Game {
         buffer.translate(-player.getX() + 800 / 2, -player.getY() + 600 / 2);
         for (Zombie zombie : zombies) {
             zombie.draw(buffer);
-            //System.out.println("ZOMBIE : X - " + (zombie.getX() - 400) + " Y - " + (zombie.getY() - 300));
         }
         buffer.translate(player.getX() - 800 / 2, player.getY() - 600 / 2);
         if (player.isDead()) {
-            buffer.drawEndingScreen("GAME OVER", mouse);
-            checkGameOptions(260, 315, "restart");
-            checkGameOptions(365, 410, "quit");
+            gameOver(buffer);
         }
         if (gameEnded) {
-            buffer.drawEndingScreen("YOU WON", mouse);
-            checkGameOptions(260, 315, "restart");
-            checkGameOptions(365, 410, "quit");
+            wonGame(buffer);
         }
         mouse.drawCursor(buffer);
-        //System.out.println("CURSOR : X - " + (player.getX() - 800 / 2) + " Y - " + (player.getY() - 600 / 2));
+    }
 
+    private void hasPlayerWonGame() {
+        if (zombies.count() == 0 && round == 5) {
+            gameEnded = true;
+        }
+    }
+
+    private void gameOver(Buffer buffer) {
+        buffer.drawEndingScreen("GAME OVER", mouse);
+        checkGameOptions(260, 315, "restart");
+        checkGameOptions(365, 410, "quit");
+        Sound.GAME_OVER.play(false);
+    }
+
+    private void wonGame(Buffer buffer) {
+        buffer.drawEndingScreen("YOU WON", mouse);
+        checkGameOptions(260, 315, "restart");
+        checkGameOptions(365, 410, "quit");
+    }
+
+    private void startGame() {
+        zombies = ZombieRepository.getInstance();
+        player.teleport(1000, 600);
+        camera.updateCameraPosition(player.getX(), player.getY());
+        RenderingEngine.getInstance().getScreen().fullScreen();
+        RenderingEngine.getInstance().getScreen().hideCursor();
+        round = 1;
+        gameEnded = false;
+        createZombies();
+        Sound.THEME.play(true);
     }
 
     private void checkGameOptions(int optionMinHeight, int optionMaxHeight, String option) {
@@ -139,33 +153,33 @@ public class RoomClearingGame extends Game {
 
     private void createZombies() {
         switch (round) {
-            case 1 :
+            case 1 -> {
                 for (int i = 0; i < 10; i++) {
                     createZombie();
                 }
-                break;
-            case 2 :
+            }
+            case 2 -> {
                 for (int i = 0; i < 15; i++) {
                     createZombie();
                 }
-                break;
-            case 3 :
+            }
+            case 3 -> {
                 for (int i = 0; i < 20; i++) {
                     createZombie();
                 }
-                break;
-            case 4 :
+            }
+            case 4 -> {
                 for (int i = 0; i < 25; i++) {
                     createZombie();
                 }
-                break;
-            case 5 :
+            }
+            case 5 -> {
                 Sound.FINAL_ROUND_CHANGE.play(false);
                 for (int i = 0; i < 30; i++) {
                     createZombie();
                 }
                 Sound.FINAL_ROUND.play(true);
-                break;
+            }
         }
     }
 

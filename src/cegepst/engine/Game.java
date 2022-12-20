@@ -31,8 +31,6 @@ public abstract class Game {
     }
 
     protected void restart() {
-        run();
-        conclude();
     }
 
     private void run() {
