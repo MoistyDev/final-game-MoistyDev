@@ -1,5 +1,6 @@
 package cegepst.engine;
 
+import javax.swing.Timer;
 import java.util.concurrent.TimeUnit;
 
 public class GameTime {
@@ -21,6 +22,10 @@ public class GameTime {
 
     public static long getElapsedTime() {
         return System.currentTimeMillis() - gameStartTime;
+    }
+
+    public static long getFpsTimeDelta() {
+        return fpsTimeDelta;
     }
 
     public static String getElapsedFormattedTime() {

@@ -25,7 +25,7 @@ public class VikingGame extends Game {
 
         Music.WORLD_BACKGROUND.play();
 
-        //RenderingEngine.getInstance().getScreen().fullScreen();
+        RenderingEngine.getInstance().getScreen().fullScreen();
         RenderingEngine.getInstance().getScreen().hideCursor();
     }
 

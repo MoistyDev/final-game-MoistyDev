@@ -1,8 +1,10 @@
 package cegepst.engine.graphics;
 
 import javax.swing.*;
+import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
 public class RenderingEngine {
@@ -17,6 +19,10 @@ public class RenderingEngine {
             instance = new RenderingEngine();
         }
         return instance;
+    }
+
+    public JPanel getPanel() {
+        return panel;
     }
 
     public Screen getScreen() {
@@ -50,6 +56,14 @@ public class RenderingEngine {
         panel.addKeyListener(listener);
     }
 
+    public void addMouseMovementListener(MouseMotionListener listener) {
+        panel.addMouseMotionListener(listener);
+    }
+
+    public void addMouseClickListener(MouseInputListener listener) {
+        panel.addMouseListener(listener);
+    }
+
     private RenderingEngine() {
         initializeFrame();
         initializePanel();
@@ -59,13 +73,12 @@ public class RenderingEngine {
         panel = new JPanel();
         panel.setBackground(Color.blue);
         panel.setFocusable(true);
-        panel.setDoubleBuffered(true);
         screen.setPanel(panel);
     }
 
     private void initializeFrame() {
         screen = new Screen();
-        screen.setTitle("Test game");
+        screen.setTitle("Zombie Game");
     }
 
     private RenderingHints buildRenderingHints() {
@@ -74,6 +87,7 @@ public class RenderingEngine {
                 RenderingHints.VALUE_ANTIALIAS_ON);
         hints.put(RenderingHints.KEY_RENDERING,
                 RenderingHints.VALUE_RENDER_QUALITY);
+        hints.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         return hints;
     }
 }

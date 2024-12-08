@@ -2,6 +2,7 @@ package cegepst.engine.entities;
 
 import cegepst.engine.controls.Direction;
 import cegepst.engine.graphics.Buffer;
+import cegepst.roomClearingGame.World;
 
 import java.awt.*;
 
@@ -35,25 +36,13 @@ public abstract class MovableEntity extends StaticEntity {
         return moved;
     }
 
+    public void setMoved(boolean value) {
+        this.moved = value;
+    }
+
     public void move(Direction direction) {
         this.direction = direction;
         move();
-    }
-
-    public void moveUp() {
-        move(Direction.UP);
-    }
-
-    public void moveDown() {
-        move(Direction.DOWN);
-    }
-
-    public void moveLeft() {
-        move(Direction.LEFT);
-    }
-
-    public void moveRight() {
-        move(Direction.RIGHT);
     }
 
     public Rectangle getHitBox() {

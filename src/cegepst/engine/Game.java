@@ -30,6 +30,10 @@ public abstract class Game {
         playing = false;
     }
 
+    protected void restart() {
+
+    }
+
     private void run() {
         renderingEngine.start();
         GameTime gameTime = new GameTime();

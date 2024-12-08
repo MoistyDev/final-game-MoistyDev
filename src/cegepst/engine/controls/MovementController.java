@@ -4,10 +4,10 @@ import java.awt.event.KeyEvent;
 
 public class MovementController extends Controller {
 
-    private int upKey = KeyEvent.VK_UP;
-    private int downKey = KeyEvent.VK_DOWN;
-    private int leftKey = KeyEvent.VK_LEFT;
-    private int rightKey = KeyEvent.VK_RIGHT;
+    private int upKey = KeyEvent.VK_W;
+    private int downKey = KeyEvent.VK_S;
+    private int leftKey = KeyEvent.VK_A;
+    private int rightKey = KeyEvent.VK_D;
 
     public MovementController() {
         bindKey(upKey);
